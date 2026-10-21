@@ -14,7 +14,13 @@ from .guidance import generate_guidance
 # from .local_report import generate_local_report
 from .mapping import generate_mapping
 from .scap import generate_scap
-from .translation import generate_localize_template, generate_mo_from_json
+from .spreadsheet import (
+    export_spreadsheet,
+    export_template,
+    import_spreadsheet,
+    generate_spreadsheet_export,
+    generate_spreadsheet_import,
+)
 
 __all__ = [
     "generate_baseline",
@@ -22,5 +28,9 @@ __all__ = [
     "generate_localize_template",
     "generate_mapping",
     "generate_mo_from_json",
-    "generate_scap",
+    "export_spreadsheet",
+    "export_template",
+    "import_spreadsheet",
+    "generate_spreadsheet_export",
+    "generate_spreadsheet_import",
 ]

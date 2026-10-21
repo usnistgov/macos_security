@@ -22,9 +22,10 @@ class ResultDef(BaseModelWithAccessors):
 
     model_config = ConfigDict(extra="ignore")
 
-    string: str | None = None
-    integer: int | ODV | None = None
-    boolean: bool | None = None
+    string: Optional[str] = None
+    integer: Optional[Union[int, ODV]] = None
+    boolean: Optional[bool] = None
+    exit_code: Optional[int] = None
 
 
 class ShellCheck(BaseModelWithAccessors):

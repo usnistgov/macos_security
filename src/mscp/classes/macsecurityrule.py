@@ -15,7 +15,7 @@ from typing import Any
 from uuid import uuid4
 
 # Additional python modules
-from pydantic import Field, ValidationError, field_validator
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 from ..common_utils import (
     collect_overrides,
@@ -42,12 +42,45 @@ def deep_merge(a, b, preferred_key=None):
     for key, value in b.items():
         if key == preferred_key:
             a[key] = value
-            return a
+            continue
         if key in a and isinstance(a[key], dict) and isinstance(value, dict):
             deep_merge(a[key], value, preferred_key)
         else:
             a[key] = value
     return a
+
+
+def resolve_enforcement_info(platform_data: dict, os_version_str: str) -> dict:
+    """Resolve the enforcement_info that applies to a specific OS version.
+
+    The platform-level ``enforcement_info`` (e.g.
+    ``platforms.macOS.enforcement_info``) is the default. An OS-version-specific
+    block (e.g. ``platforms.macOS.26.0.enforcement_info``) augments that
+    default rather than replacing it wholesale: only the top-level keys it
+    actually specifies (``check``, ``fix``, ``default_state``) override the
+    default's corresponding key, so a version override that defines only
+    ``fix`` still gets the default's ``check``, and vice versa.
+
+    Args:
+        platform_data (dict): The rule's data for one OS family (e.g.
+            ``rule_yaml["platforms"]["macOS"]``), keyed by OS version plus
+            top-level keys like ``enforcement_info``/``introduced``.
+        os_version_str (str): The OS version being processed (e.g.
+            ``"26.0"``).
+
+    Returns:
+        dict: The merged enforcement_info, or ``{}`` if neither a
+            platform-level nor a version-specific block is defined.
+    """
+    merged = dict(platform_data.get("enforcement_info") or {})
+
+    version_data = platform_data.get(os_version_str) or {}
+    if isinstance(version_data, dict):
+        override = version_data.get("enforcement_info")
+        if override:
+            merged.update(override)
+
+    return merged
 
 
 class Sectionmap(StrEnum):
@@ -101,7 +134,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         customized: Field names that have been overridden by customization
             files.
         mechanism: Enforcement mechanism — one of ``"Manual"``,
-            ``"Script"``, ``"Configuration Profile"``, ``"Inherent"``,
+            ``"Script"``, ``"Configuration Profile"``, ``"Declarative Device Management"``, ``"Inherent"``,
             ``"Permanent"``, ``"N/A"``.
         section: Section name the rule belongs to (e.g.
             ``"Operating System"``, ``"Inherent"``).
@@ -128,6 +161,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     odv: dict[str, Any] | None = None
     tags: list[str] = Field(default_factory=list)
     result_value: str | int | bool | None = None
+    result_exit_code: int | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
     customized: list[str] = Field(default_factory=list)
@@ -219,6 +253,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             logger.debug("Transforming rule: {}", rule_id)
 
             result_value: str | int | bool | None = None
+            exit_code: int | None = None
             check_value: str | None = None
             fix_value: str | None = None
             default_state_value: str | None = None
@@ -265,7 +300,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             rule_yaml["rule_id"] = rule_yaml.pop("id", rule_id)
 
             customized_fields = []
-
             if rule_yaml["rule_id"] in custom_rule_dict:
                 logger.info(f"Found customization for {rule_yaml['rule_id']}")
                 for custom_rule_key, custom_rule_value in custom_rule_dict[
@@ -284,23 +318,16 @@ class Macsecurityrule(BaseModelWithAccessors):
                         continue
                     if custom_rule_key == "platforms":
                         platform_info = rule_yaml.get("platforms")
-                        deep_merge(platform_info, custom_rule_value)
+                        deep_merge(
+                            platform_info, custom_rule_value, preferred_key="result"
+                        )
                         continue
 
                     rule_yaml[custom_rule_key] = custom_rule_value
 
-            enforcement_info = rule_yaml["platforms"][os_type].get(
-                "enforcement_info", {}
+            enforcement_info = resolve_enforcement_info(
+                rule_yaml["platforms"][os_type], os_version_str
             )
-
-            if enforcement_info:
-                platform_enforcement_info = rule_yaml["platforms"][os_type][
-                    os_version_str
-                ].get("enforcement_info", {})
-                deep_merge(
-                    enforcement_info, platform_enforcement_info, preferred_key="result"
-                )
-
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
@@ -312,7 +339,10 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                 if check_result:
                     for k, v in enforcement_info["check"]["result"].items():
-                        if isinstance(v, (int, bool, str)):
+                        if k == "exit_code":
+                            exit_code = v
+                            break
+                        elif isinstance(v, (int, bool, str)):
                             result_value = v
                             break
                         elif k == "base64":
@@ -364,6 +394,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule_yaml.pop("mobileconfig_info", None)
             else:
                 payloads = None
+            if "ddm_info" in rule_yaml:
+                mechanism = "Declarative Device Management"
 
             benchmarks: list[dict[str, str]] = rule_yaml["platforms"][os_type][
                 os_version_str
@@ -407,7 +439,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                     cis: dict[str, Any] = rule_yaml["references"].get("cis", {})
                 elif ref_key == "bsi":
                     bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})
-                elif ref_key == "custom":  # support for 1.0 custom refs format
+                elif ref_key == "custom":
                     for custom_ref_key in rule_yaml["references"]["custom"]:
                         custom_refs[custom_ref_key] = rule_yaml["references"][
                             "custom"
@@ -463,6 +495,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule = cls(
                     **rule_yaml,
                     result_value=result_value,
+                    result_exit_code=exit_code,
                     customized=customized_fields,
                     mobileconfig_info=payloads,
                     mechanism=mechanism,
@@ -654,11 +687,12 @@ class Macsecurityrule(BaseModelWithAccessors):
     def _update_fix_for_configuration_profile(self) -> None:
         """Update ``self.fix`` or enforcement info for configuration profile rules."""
         if self.mechanism == "Configuration Profile":
-            if (
-                not self.platforms.get(self.os_type, {})
-                .get("enforcement_info", {})
-                .get("fix")
-            ):
+            os_version_str = str(float(self.os_version))
+            enforcement_info = resolve_enforcement_info(
+                self.platforms.get(self.os_type, {}), os_version_str
+            )
+
+            if not enforcement_info.get("fix"):
                 if self.mobileconfig_info and len(self.mobileconfig_info) > 0:
                     self.fix = (
                         f"Create a configuration profile containing the following keys in the "
@@ -670,11 +704,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                     )
             else:
                 if self.mobileconfig_info and len(self.mobileconfig_info) > 0:
-                    self.platforms[self.os_type]["enforcement_info"]["fix"] = (
-                        format_payload(
-                            self.mobileconfig_info[0].payload_type,
-                            self.mobileconfig_info[0].payload_content,
-                        )
+                    enforcement_info["fix"] = format_payload(
+                        self.mobileconfig_info[0].payload_type,
+                        self.mobileconfig_info[0].payload_content,
                     )
 
     def _fill_in_odv(self, parent_values: str) -> None:
@@ -713,6 +745,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                 if obj == "$ODV":
                     return odv_value
                 return obj.replace("$ODV", str(odv_value))
+            elif isinstance(obj, BaseModel):
+                return obj.__class__.model_validate(
+                    replace_odv_in_obj(obj.model_dump())
+                )
             elif isinstance(obj, dict):
                 return {k: replace_odv_in_obj(v) for k, v in obj.items()}
             elif isinstance(obj, list):

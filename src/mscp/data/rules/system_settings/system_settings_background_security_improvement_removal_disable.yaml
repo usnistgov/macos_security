@@ -5,8 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97130-9
       macos_26:
         - CCE-96726-5
+      ios_27:
+        - CCE-97410-5
+      ios_26:
+        - CCE-96729-9
     800-53r5:
       - SI-2
       - SI-2(5)
@@ -24,6 +30,7 @@ references:
       - 8.08
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
@@ -34,8 +41,25 @@ platforms:
           string: 'false'
       fix:
         additional_info: This is implemented by Declarative Device Management (DDM).
+  iOS:
+    '27.0':
+      supervised: true
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: nlmapgov_plus
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: RapidSecurityResponse
   ddm_value:
     EnableRollback: false
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate

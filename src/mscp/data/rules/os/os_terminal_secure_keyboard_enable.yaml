@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97101-0
       macos_26:
         - CCE-95321-6
       macos_15:
@@ -23,10 +25,16 @@ references:
         - 6.4.1 (level 1)
       macos_14:
         - 6.4.1 (level 1)
+      macos_27:
+        - 6.4.1 (level 1)
     controls_v8:
       - 4.8
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -37,10 +45,6 @@ platforms:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-

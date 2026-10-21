@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97084-8
       macos_26:
         - CCE-95302-6
       macos_15:
@@ -19,37 +21,19 @@ references:
         - 2.10.1.1 (level 2)
       macos_14:
         - 2.9.1.2 (level 2)
+      macos_27:
+        - 2.10.1 (level 2)
     controls_v8:
       - 4.1
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl2
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-      enforcement_info:
-        check:
-          shell: |-
-            error_count=0
-            if /usr/sbin/system_profiler SPHardwareDataType | /usr/bin/grep -q "MacBook"; then
-              cpuType=$(/usr/sbin/sysctl -n machdep.cpu.brand_string)
-              if echo "$cpuType" | grep -q "Apple"; then
-                sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
-                displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
-                if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 15 ]]; then
-                  ((error_count++))
-                fi
-                if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -gt "$sleepMode" ]]; then
-                  ((error_count++))
-                fi
-              fi
-            fi
-            echo "$error_count"
-          result:
-            integer: 0
-    '14.0':
       benchmarks:
         - name: cis_lvl2
       enforcement_info:

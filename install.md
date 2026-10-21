@@ -26,23 +26,13 @@ python3 -m pip install --upgrade -r requirements.txt
 
 You can now run the `./mscp.py` CLI to get started.
 
-## Ruby instructions (optional)
+## PDF generation (typst)
 
-The ruby components and configuration will take place the first time `./mscp.py guidance` is executed. The instructions here are for information and troubleshooting purposes.
-
-### Setup bundle configuration file
-
-```bash
-bundle config path mscp_gems
-bundle config bin mscp_gems/bin
-```
-
-### Install ruby tools
-
-```bash
-bundle install
-bundle binstubs --all
-```
+Guidance PDFs are rendered with [typst](https://typst.app) (no Ruby, no LaTeX).
+It ships as the [`typst`](https://pypi.org/project/typst/) Python package — a
+regular project dependency — so the standard install above (or `uv sync`) is all
+you need; there is no separate tool to install. HTML and Markdown guidance are
+generated in pure Python.
 
 ## Install as python module for development (optional)
 
@@ -53,3 +43,19 @@ python3 -m pip install git+https://github.com/usnistgov/macos_security@main
 ```
 
 You can now use the MSCP modules by way of `import mscp` in your own python tool.
+
+## Running the tests (development)
+
+Install the development dependencies, which include pytest:
+
+```bash
+python3 -m pip install --upgrade -r requirements-dev.txt
+```
+
+Then run the suite from the repository root:
+
+```bash
+python3 -m pytest
+```
+
+Tests marked `integration` compile PDFs with typst and can be skipped with `python3 -m pytest -m "not integration"`.

@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-96975-8
       macos_26:
         - CCE-95130-1
       macos_15:
@@ -24,6 +26,8 @@ references:
     srg:
       - SRG-OS-000341-GPOS-00132
     disa_stig:
+      macos_27:
+        - APPL-27-001029
       macos_26:
         - APPL-26-001029
       macos_15:
@@ -44,11 +48,19 @@ references:
         - 3.4 (level 1)
       macos_14:
         - 3.4 (level 1)
+      macos_27:
+        - 3.4 (level 1)
     controls_v8:
       - 8.1
       - 8.3
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: low
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -65,12 +77,6 @@ platforms:
           severity: low
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: low
     enforcement_info:
       check:
         shell: '/usr/bin/awk -F: ''/expire-after/{print $2}'' /etc/security/audit_control'

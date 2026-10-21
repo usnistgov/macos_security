@@ -7,34 +7,37 @@ output.  `render_template` performs the actual Jinja render.  Helper Jinja
 filters are also defined here: `group_ulify`, `group_ulify_md`,
 `render_references`, `render_rules`, `render_rules_md`,
 `replace_include_with_file_content`, `asciidoc_to_markdown`, and
-`get_nested`.
+`get_nested`.  The `ddm_info_to_json` filter is imported from `ddm` and
+registered here alongside `mobileconfig_payloads_to_xml`.
 """
 
 # Standard python modules
 import gettext
 import re
+import shutil
 import sys
-import time
-from collections.abc import Mapping, Sequence
+from html import escape as html_escape
+from collections.abc import Callable, Mapping
 from itertools import groupby
 from pathlib import Path
 from typing import Any
 
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader, Template
-from yaspin.core import Yaspin
-from yaspin.spinners import Spinners
+# from yaspin.core import Yaspin
+# from yaspin.spinners import Spinners
 
 # Local python modules
 from ...classes import Baseline
 from ...classes.mobileconfig import mobileconfig_info_to_xml
+from .ddm import ddm_info_to_json
 from ...common_utils import (
     NIX_OS,
     config,
     logger,
     mscp_data,
+    remove_file,
     open_file,
-    run_command,
     search_paths,
 )
 
@@ -179,6 +182,741 @@ def render_rules_md(rule_set: list[str] | None) -> str:
     return "<br>".join(f"- {rule}" for rule in rule_set)
 
 
+# ---------------------------------------------------------------------------
+# Typst output helpers (PDF backend)
+#
+# Typst is a markup language where ``# $ * _ ` < > @ ~ [ ] \`` are
+# significant.  Literal data (rule IDs full of underscores, references,
+# titles) must be escaped before being injected into Typst markup, otherwise
+# it silently renders as emphasis/code or fails to compile.
+# ---------------------------------------------------------------------------
+
+# Characters that must be backslash-escaped when emitting literal Typst text.
+_TYPST_ESCAPE: dict[str, str] = {
+    "\\": "\\\\",
+    "#": "\\#",
+    "$": "\\$",
+    "*": "\\*",
+    "_": "\\_",
+    "`": "\\`",
+    "<": "\\<",
+    ">": "\\>",
+    "@": "\\@",
+    "~": "\\~",
+    "[": "\\[",
+    "]": "\\]",
+}
+
+
+def typst_escape(value: Any) -> str:
+    """Backslash-escape every Typst-significant character in *value*.
+
+    Used for short literal fields (rule IDs, references, titles, severity)
+    that must appear verbatim in the rendered PDF.
+
+    Args:
+        value (Any): Value to escape; ``None`` becomes ``""``.
+
+    Returns:
+        str: Typst-safe literal text.
+    """
+    if value is None:
+        return ""
+    return "".join(_TYPST_ESCAPE.get(ch, ch) for ch in str(value))
+
+
+def group_ulify_typst(elements: list[str]) -> str:
+    """`group_ulify` for Typst: groups by prefix, escapes each element.
+
+    Args:
+        elements (list[str]): Strings to group and format.
+
+    Returns:
+        str: ``"- N/A"`` if ``"N/A"`` is present, otherwise a newline-joined
+            Typst bullet list with every element escaped.
+    """
+    if "N/A" in elements:
+        return "- N/A"
+
+    elements.sort()
+    grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
+
+    return "\n".join(
+        "- " + ", ".join(typst_escape(e) for e in group) for group in grouped
+    ).strip()
+
+
+def render_rules_typst(rule_set: list[str] | None) -> str:
+    """`render_rules` for Typst: newline-separated escaped bullet lines.
+
+    Args:
+        rule_set (list[str] | None): Rule strings. ``None``/empty -> ``""``.
+
+    Returns:
+        str: Newline-joined ``"- <escaped rule>"`` lines.
+    """
+    if not rule_set:
+        return ""
+    return "\n".join(f"- {typst_escape(rule)}" for rule in rule_set)
+
+
+def render_references_typst(reference_set: Sequence[Dict[str, Any]]) -> str:
+    """`render_references` for Typst: flatten dicts to escaped bullet lines.
+
+    Args:
+        reference_set (Sequence[Dict[str, Any]]): Custom-reference dicts.
+
+    Returns:
+        str: Newline-joined ``"- key: value"`` Typst bullets, or ``""``.
+
+    Raises:
+        TypeError: If any element is not a dict.
+    """
+    lines: list[str] = []
+    for d in reference_set:
+        if not isinstance(d, dict):
+            raise TypeError("All elements of 'reference_set' must be dictionaries.")
+        for key, value in d.items():
+            if isinstance(value, (list, tuple)):
+                joined = ", ".join(map(str, value))
+            else:
+                joined = str(value)
+            lines.append(f"- {typst_escape(key)}: {typst_escape(joined)}")
+    return "\n".join(lines)
+
+
+# --------------------------------------------------------------------------- #
+# Shared AsciiDoc PSV table parsing (`|===` blocks), used by all three prose
+# converters below.  mSCP's supplemental rule discussions lean on a small,
+# consistent subset of AsciiDoctor's table syntax: a `[cols="W%h, W%a"]` (or
+# `[%header,cols="..."]`) attribute line, one cell per `|`-prefixed line
+# (optionally prefixed with an alignment spec like `^.^` or a cell style
+# letter like `a`), multi-line cells continued until the next cell or the
+# closing delimiter, and `+`-terminated lines for an explicit line break
+# within a cell.  This only extracts structure (rows/cells/styles); each
+# backend below renders that structure with its own markup.
+# --------------------------------------------------------------------------- #
+_TABLE_ATTR_RE = re.compile(r'^\[([^\]]*\bcols="[^"]*"[^\]]*)\]$')
+_TABLE_COLS_RE = re.compile(r'cols="([^"]*)"')
+_TABLE_CELL_START_RE = re.compile(
+    r"^(?:(?P<spec>(?:[<^>]?\.[<^>]?)|[a-z]))?\|(?P<content>.*)$"
+)
+
+
+def _table_colspecs(attrs: str) -> list[str]:
+    """Return each column's AsciiDoctor cell-style letter from a `cols="..."` attribute.
+
+    E.g. ``cols="15%h, 85%a"`` -> ``["h", "a"]``. A column with no style
+    letter (just a width/proportion like ``"7"``) defaults to ``"d"``
+    (AsciiDoctor's literal/folded default style).
+
+    Args:
+        attrs (str): Captured contents of a `[...]` attribute line.
+
+    Returns:
+        list[str]: One style letter per column, in order.
+    """
+    m = _TABLE_COLS_RE.search(attrs)
+    if not m:
+        return []
+    styles: list[str] = []
+    for spec in m.group(1).split(","):
+        spec = spec.strip()
+        styles.append(spec[-1] if spec and spec[-1].isalpha() else "d")
+    return styles
+
+
+_TABLE_COLWIDTH_RE = re.compile(r"^(\d+(?:\.\d+)?)")
+
+
+def _table_colwidths(attrs: str) -> list[float]:
+    """Return each column's relative width from a `cols="..."` attribute.
+
+    AsciiDoctor treats a leading number the same way whether or not it's
+    followed by ``%`` -- both a percentage (``"15%h, 85%a"`` -> ``[15, 85]``)
+    and a bare relative weight (``"3,7"`` -> ``[3, 7]``) just mean "size
+    columns proportional to these numbers". A column with no leading number
+    defaults to a weight of ``1``. Without this, every `|===` table in a
+    discussion renders as an independent table with no width hints, so HTML
+    (browser auto-layout) and Typst (default `auto` columns) each size every
+    table from its own content -- drifting inconsistently between tables
+    that share one `[cols=...]` spec.
+
+    Args:
+        attrs (str): Captured contents of a `[...]` attribute line.
+
+    Returns:
+        list[float]: One relative width per column, in order. Empty if
+            *attrs* has no `cols="..."`.
+    """
+    m = _TABLE_COLS_RE.search(attrs)
+    if not m:
+        return []
+    widths: list[float] = []
+    for spec in m.group(1).split(","):
+        spec = spec.strip()
+        wm = _TABLE_COLWIDTH_RE.match(spec)
+        widths.append(float(wm.group(1)) if wm else 1.0)
+    return widths
+
+
+def _parse_asciidoc_table(
+    lines: list[str], i: int, attrs: str
+) -> tuple[list[list[dict[str, str]]], bool, int]:
+    """Parse a `|===` PSV table block starting at *i* (the opening delimiter).
+
+    Each parsed cell is ``{"style": <letter>, "text": <raw multi-line text>}``.
+    A cell's style is an explicit per-cell override (e.g. ``a|...``) when
+    present, otherwise it falls back to that column's style from *attrs*
+    (default ``"d"``). Blank lines between cells are visual-only separators
+    and are dropped; blank lines *inside* a cell's own text are preserved
+    (they matter for `a`-style cells, which are recursively parsed as
+    AsciiDoc prose and treat a blank line as a paragraph break).
+
+    Args:
+        lines (list[str]): Full source, split into lines.
+        i (int): Index of the opening ``|===`` line.
+        attrs (str): Captured contents of the preceding `[...]` attribute
+            line (``""`` if the table had none).
+
+    Returns:
+        tuple[list[list[dict[str, str]]], bool, int]: Rows of cells, whether
+            row 0 is a header row (AsciiDoctor's ``%header``), and the index
+            of the closing ``|===`` line.
+    """
+    colspecs = _table_colspecs(attrs)
+    header_row = "%header" in attrs
+    ncols = len(colspecs) or 1
+
+    i += 1  # step past the opening |===
+    flat: list[dict[str, str]] = []
+    spec: str | None = None
+    text_lines: list[str] = []
+
+    def flush() -> None:
+        nonlocal spec, text_lines
+        if spec is None and not text_lines:
+            return
+        col = len(flat) % ncols
+        style = (
+            spec
+            if spec and "." not in spec
+            else (colspecs[col] if col < len(colspecs) else "d")
+        )
+        flat.append({"style": style, "text": "\n".join(text_lines).strip("\n")})
+        spec, text_lines = None, []
+
+    while i < len(lines) and lines[i].strip() != "|===":
+        raw = lines[i].strip()
+        m = _TABLE_CELL_START_RE.match(raw)
+        if m:
+            flush()
+            spec = m.group("spec")
+            text_lines = [m.group("content")]
+        elif spec is not None or text_lines:
+            text_lines.append(raw)
+        i += 1
+    flush()
+
+    rows = [flat[j : j + ncols] for j in range(0, len(flat), ncols)]
+    return rows, header_row, i
+
+
+def _fold_table_cell_lines(
+    lines: list[str],
+    inline: Callable[[str], str],
+    break_token: str,
+    join_token: str = " ",
+) -> str:
+    """Join a non-`a`-style cell's physical lines, honoring `+`-at-end hard breaks.
+
+    Each line is rendered individually with *inline*; consecutive lines are
+    then joined with *break_token* where the source line ended in `` +``
+    (AsciiDoc's forced line break) or *join_token* for an ordinary fold.
+
+    Args:
+        lines (list[str]): Non-blank physical lines making up the cell.
+        inline (Callable[[str], str]): Backend-specific inline renderer.
+        break_token (str): Separator where the source forced a break.
+        join_token (str): Separator for an ordinary fold.
+
+    Returns:
+        str: The rendered, joined cell content.
+    """
+    if not lines:
+        return ""
+    segments: list[str] = []
+    seps: list[str] = []
+    for ln in lines:
+        s = ln.rstrip()
+        hard = s.endswith(" +") or s == "+"
+        if hard:
+            s = s[:-1].rstrip()
+        segments.append(inline(s))
+        seps.append(break_token if hard else join_token)
+    out = segments[0]
+    for seg, sep in zip(segments[1:], seps[:-1]):
+        out += sep + seg
+    return out
+
+
+_TYPST_LINK_RE = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
+_TYPST_BOLD_RE = re.compile(r"\*{1,2}([^*\n]+?)\*{1,2}")
+_TYPST_ITALIC_RE = re.compile(r"(?<![\w\\])_{1,2}([^_\n]+?)_{1,2}(?![\w])")
+_TYPST_SENTINEL_RE = re.compile("\x00(\\d+)\x00")
+
+
+def _typst_full_escape(text: str) -> str:
+    return "".join(_TYPST_ESCAPE.get(ch, ch) for ch in text)
+
+
+def _typst_inline(text: str) -> str:
+    # Protect links and *balanced* bold/italic as sentinels, then fully
+    # escape everything else.  This keeps intentional ``*bold*`` / ``_italic_``
+    # markup while neutralizing stray ``*`` ``_`` ``[`` ``]`` from regexes,
+    # shell examples, or AsciiDoc artifacts (``***``) that would otherwise
+    # leave an unclosed Typst delimiter and fail compilation.
+    stash: list[str] = []
+
+    def _put(rendered: str) -> str:
+        stash.append(rendered)
+        return f"\x00{len(stash) - 1}\x00"
+
+    def _link(m: "re.Match[str]") -> str:
+        url, label = m.group(1), m.group(2).strip()
+        if label:
+            return _put(f'#link("{url}")[{_typst_full_escape(label)}]')
+        return _put(f'#link("{url}")')
+
+    text = _TYPST_LINK_RE.sub(_link, text)
+    text = _TYPST_BOLD_RE.sub(lambda m: _put(f"*{_typst_full_escape(m.group(1))}*"), text)
+    text = _TYPST_ITALIC_RE.sub(
+        lambda m: _put(f"_{_typst_full_escape(m.group(1))}_"), text
+    )
+    escaped = _typst_full_escape(text)
+    return _TYPST_SENTINEL_RE.sub(lambda m: stash[int(m.group(1))], escaped)
+
+
+def _render_table_typst(
+    rows: list[list[dict[str, str]]],
+    header_row: bool,
+    colwidths: list[float] | None = None,
+) -> str:
+    """Render parsed table *rows* as a Typst ``#table(...)`` call.
+
+    `a`-style cells are recursively rendered via `asciidoc_to_typst` (they
+    may contain lists, admonitions, or nested prose); other cells are folded
+    to a single line, honoring `+`-forced breaks.
+
+    *colwidths* (from `_table_colwidths`), when it covers every column, is
+    emitted as explicit ``Nfr`` column widths so proportions match the
+    source's `[cols=...]` spec -- without it, `columns: <count>` sizes each
+    table from its own content, and sibling tables sharing one `cols=` spec
+    can drift to different widths from each other.
+    """
+    if not rows:
+        return ""
+    ncols = len(rows[0])
+
+    def cell_content(cell: dict[str, str]) -> str:
+        if cell["style"] == "a":
+            return asciidoc_to_typst(cell["text"])
+        lines = [ln for ln in cell["text"].splitlines() if ln.strip()]
+        return _fold_table_cell_lines(lines, _typst_inline, " \\\n", " ")
+
+    if colwidths and len(colwidths) == ncols:
+        columns = "(" + ", ".join(f"{w:.4g}fr" for w in colwidths) + ")"
+    else:
+        columns = str(ncols)
+
+    body_rows = rows
+    parts = [f"#table(\n  columns: {columns},"]
+    if header_row:
+        header_cells = ", ".join(f"[{cell_content(c)}]" for c in rows[0])
+        parts.append(f"  table.header({header_cells}),")
+        body_rows = rows[1:]
+    for row in body_rows:
+        parts.append("  " + ", ".join(f"[{cell_content(c)}]" for c in row) + ",")
+    parts.append(")")
+    return "\n".join(parts)
+
+
+def asciidoc_to_typst(value: str) -> str:
+    """Convert a subset of AsciiDoc to Typst markup.
+
+    Handles source/code blocks (emitted as Typst raw fences, contents left
+    verbatim), ``NOTE:``/``[IMPORTANT]`` admonitions, block titles,
+    unordered/ordered lists, `` +``-terminated hard line breaks, `|===` PSV
+    tables (rendered as a Typst ``#table(...)``), and ``link:url[text]``
+    macros.  Remaining prose is escaped for Typst while preserving
+    ``*bold*`` / ``_italic_`` (shared between AsciiDoc and Typst).
+
+    Args:
+        value (str): AsciiDoc source text.
+
+    Returns:
+        str: Typst-formatted text.
+    """
+    if value is None:
+        return ""
+
+    lines = str(value).splitlines()
+    result: list[str] = []
+    i = 0
+
+    while i < len(lines):
+        line = lines[i].rstrip()
+
+        # [source,lang] code block
+        if line.startswith("[source"):
+            lang_match = re.match(r"\[source\s*,?\s*([a-zA-Z0-9_+-]+)?", line)
+            language = (lang_match.group(1) or "") if lang_match else ""
+            if i + 1 < len(lines) and lines[i + 1].strip() in ("----", "...."):
+                fence = lines[i + 1].strip()
+                i += 2
+                code_lines: list[str] = []
+                while i < len(lines) and lines[i].strip() != fence:
+                    code_lines.append(lines[i])
+                    i += 1
+                result.append(f"```{language}".rstrip())
+                result.extend(code_lines)
+                result.append("```")
+
+        # Bare code block
+        elif line.strip() in ("----", "...."):
+            fence = line.strip()
+            i += 1
+            code_lines = []
+            while i < len(lines) and lines[i].strip() != fence:
+                code_lines.append(lines[i])
+                i += 1
+            result.append("```")
+            result.extend(code_lines)
+            result.append("```")
+
+        # NOTE: admonition -> tinted callout box (see admonition() in header.typ.jinja)
+        elif line.startswith("NOTE:"):
+            result.append(f'#admonition("NOTE")[{_typst_inline(line[5:].strip())}]')
+
+        # [IMPORTANT] admonition block -> tinted callout box
+        elif (
+            line.strip() == "[IMPORTANT]"
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "===="
+        ):
+            i += 2
+            important_lines: list[str] = []
+            while i < len(lines) and lines[i].strip() != "====":
+                important_lines.append(lines[i].strip())
+                i += 1
+            result.append(
+                f'#admonition("IMPORTANT")[{_typst_inline(" ".join(important_lines))}]'
+            )
+
+        # `[cols=...]` (+ optional `%header`) immediately followed by `|===`: a table.
+        elif (
+            _TABLE_ATTR_RE.match(line)
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "|==="
+        ):
+            attrs = _TABLE_ATTR_RE.match(line).group(1)
+            rows, header_row, i = _parse_asciidoc_table(lines, i + 1, attrs)
+            result.append(_render_table_typst(rows, header_row, _table_colwidths(attrs)))
+
+        # Bare `|===` table with no preceding attribute line.
+        elif line.strip() == "|===":
+            rows, header_row, i = _parse_asciidoc_table(lines, i, "")
+            result.append(_render_table_typst(rows, header_row))
+
+        # Skip AsciiDoc block attribute lines, e.g. [width=...], [options=...]
+        elif re.match(r"^\[(cols|width|options|grid|frame|stripes|%|role).*\]$", line):
+            pass
+
+        # Block title `.Some Title`
+        elif re.match(r"^\.(?!\d+\s)(.+)$", line):
+            title_text = re.match(r"^\.(.+)$", line).group(1).strip()
+            result.append(f"*{_typst_full_escape(title_text)}*")
+
+        # Unordered list `* item` / `- item` -> `- item`
+        elif line.strip().startswith("* ") or line.strip().startswith("- "):
+            result.append("- " + _typst_inline(line.strip()[2:]))
+
+        # Ordered list `. item` -> `+ item`
+        elif re.match(r"^\.\s+.+", line):
+            result.append("+ " + _typst_inline(line.strip()[2:]))
+
+        else:
+            stripped = line.strip()
+            # AsciiDoc's " +" at line end forces a line break within the
+            # paragraph; Typst's equivalent is a trailing backslash, but only
+            # when a following line actually exists to break into -- a
+            # trailing backslash with nothing after it is a dangling/invalid
+            # delimiter in Typst.
+            is_break_marker = stripped.endswith(" +") or stripped == "+"
+            if is_break_marker:
+                stripped = stripped[:-1].rstrip()
+            hard_break = is_break_marker and i + 1 < len(lines)
+            text = _typst_inline(stripped)
+            result.append(text + " \\" if hard_break else text)
+
+        i += 1
+
+    return "\n".join(result)
+
+
+# --------------------------------------------------------------------------- #
+# HTML backend.  Mirrors the typst helpers but emits
+# semantic HTML that reuses AsciiDoctor's CSS class names (``admonitionblock``,
+# ``listingblock``, ``ulist`` ...) so the bundled ``asciidoctor.css`` styles it
+# with no Ruby in the loop.
+# --------------------------------------------------------------------------- #
+def group_ulify_html(elements: list[str]) -> str:
+    """`group_ulify` for HTML: grouped, escaped ``<ul>`` bullet list."""
+    if "N/A" in elements:
+        return "N/A"
+    elements.sort()
+    grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
+    items = "".join(
+        f"<li>{html_escape(', '.join(map(str, group)))}</li>" for group in grouped
+    )
+    return f'<ul class="ulist"><ul>{items}</ul></ul>' if items else ""
+
+
+def render_rules_html(rule_set: list[str] | None) -> str:
+    """`render_rules` for HTML: escaped ``<ul>`` bullet list."""
+    if not rule_set:
+        return ""
+    # Values may be ints/floats (e.g. CIS control "3.3"); coerce before escaping.
+    items = "".join(f"<li>{html_escape(str(r))}</li>" for r in rule_set)
+    return f'<ul class="ulist"><ul>{items}</ul></ul>'
+
+
+def render_references_html(reference_set: Sequence[Dict[str, Any]]) -> str:
+    """`render_references` for HTML: ``<ul>`` of ``key: value`` bullets."""
+    lines: list[str] = []
+    for d in reference_set:
+        if not isinstance(d, dict):
+            raise TypeError("All elements of 'reference_set' must be dictionaries.")
+        for key, value in d.items():
+            joined = ", ".join(map(str, value)) if isinstance(value, (list, tuple)) else str(value)
+            lines.append(f"<li>{html_escape(str(key))}: {html_escape(joined)}</li>")
+    return f'<ul class="ulist"><ul>{"".join(lines)}</ul></ul>' if lines else ""
+
+
+_HTML_LINK_RE = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
+_HTML_BREAK_SENTINEL = "\x00BR\x00"
+
+
+def _html_inline(text: str) -> str:
+    # Escape first, then re-introduce the small set of markup we support so
+    # user text can never inject tags.
+    out: list[str] = []
+    last = 0
+    for m in _HTML_LINK_RE.finditer(text):
+        out.append(html_escape(text[last : m.start()]))
+        url, label = m.group(1), m.group(2).strip()
+        out.append(f'<a href="{html_escape(url)}">{html_escape(label or url)}</a>')
+        last = m.end()
+    out.append(html_escape(text[last:]))
+    joined = "".join(out)
+    joined = re.sub(r"\*([^*]+)\*", r"<strong>\1</strong>", joined)
+    joined = re.sub(r"(?<![\w/])_([^_]+)_(?![\w/])", r"<em>\1</em>", joined)
+    return joined
+
+
+def _html_admonition(kind: str, body: str) -> str:
+    return (
+        f'<div class="admonitionblock {kind.lower()}"><table><tr>'
+        f'<td class="icon"><div class="title">{kind.title()}</div></td>'
+        f'<td class="content">{body}</td></tr></table></div>'
+    )
+
+
+def _fold_para_lines(lines: list[str]) -> str:
+    """Join paragraph *lines*, marking `` +``-forced breaks with a sentinel.
+
+    Run before `_html_inline` so bold/italic/link matching can still span a
+    forced break; the sentinel is swapped for a real ``<br>`` only *after*
+    escaping, so it can never itself be escaped or mistaken for markup.
+    """
+    if not lines:
+        return ""
+    segments: list[str] = []
+    seps: list[str] = []
+    for ln in lines:
+        s = ln.rstrip()
+        hard = s.endswith(" +") or s == "+"
+        if hard:
+            s = s[:-1].rstrip()
+        segments.append(s)
+        seps.append(_HTML_BREAK_SENTINEL if hard else " ")
+    out = segments[0]
+    for seg, sep in zip(segments[1:], seps[:-1]):
+        out += sep + seg
+    return out
+
+
+def _render_table_html(
+    rows: list[list[dict[str, str]]],
+    header_row: bool,
+    colwidths: list[float] | None = None,
+) -> str:
+    """Render parsed table *rows* reusing AsciiDoctor's `tableblock` classes.
+
+    `a`-style cells are recursively rendered via `asciidoc_to_html` (they may
+    contain lists, admonitions, or nested prose); other cells are folded to a
+    single line, honoring `+`-forced breaks. A cell renders as `<th>` when
+    its column style is `h`, or when *header_row* marks row 0 as a header.
+
+    *colwidths* (from `_table_colwidths`), when it covers every column, is
+    emitted as an explicit `<colgroup>` so the table's proportions match the
+    source's `[cols=...]` spec instead of the browser's per-table,
+    content-based auto-layout -- without it, sibling tables sharing one
+    `cols=` spec (e.g. a discussion with several label/value tables) can end
+    up with visibly different column widths from each other.
+    """
+    if not rows:
+        return ""
+
+    def cell_inner(cell: dict[str, str]) -> str:
+        if cell["style"] == "a":
+            return asciidoc_to_html(cell["text"])
+        lines = [ln for ln in cell["text"].splitlines() if ln.strip()]
+        return _fold_table_cell_lines(lines, _html_inline, "<br>", " ")
+
+    def tr(row: list[dict[str, str]], force_th: bool) -> str:
+        cells = []
+        for c in row:
+            tag = "th" if force_th or c["style"] == "h" else "td"
+            cells.append(
+                f'<{tag} class="tableblock halign-left valign-top">'
+                f"{cell_inner(c)}</{tag}>"
+            )
+        return f"<tr>{''.join(cells)}</tr>"
+
+    colgroup = ""
+    if colwidths and len(colwidths) == len(rows[0]):
+        total = sum(colwidths) or 1.0
+        cols = "".join(
+            f'<col style="width:{w / total * 100:.4g}%">' for w in colwidths
+        )
+        colgroup = f"<colgroup>{cols}</colgroup>"
+
+    body_rows = rows
+    thead = ""
+    if header_row:
+        thead = f"<thead>{tr(rows[0], True)}</thead>"
+        body_rows = rows[1:]
+    tbody = "".join(tr(r, False) for r in body_rows)
+    return (
+        '<table class="tableblock frame-all grid-all stretch">'
+        f"{colgroup}{thead}<tbody>{tbody}</tbody></table>"
+    )
+
+
+def asciidoc_to_html(value: str) -> str:
+    """Convert a subset of AsciiDoc to HTML.
+
+    Handles source/code blocks (``listingblock``), ``NOTE:``/``[IMPORTANT]``
+    admonitions (``admonitionblock``), block titles, unordered/ordered lists,
+    `` +``-terminated hard line breaks, `|===` PSV tables (``tableblock``),
+    ``link:url[text]`` macros, and ``*bold*`` / ``_italic_`` inline markup.
+    Prose is HTML-escaped; the emitted tags reuse AsciiDoctor's class names so
+    the existing CSS applies.
+
+    Args:
+        value (str): AsciiDoc source text.
+
+    Returns:
+        str: HTML fragment.
+    """
+    if value is None:
+        return ""
+
+    lines = str(value).splitlines()
+    result: list[str] = []
+    para: list[str] = []
+    list_items: list[str] = []
+
+    def flush_para() -> None:
+        if para:
+            text = _html_inline(_fold_para_lines(para)).replace(
+                _HTML_BREAK_SENTINEL, "<br>"
+            )
+            result.append(f'<div class="paragraph"><p>{text}</p></div>')
+            para.clear()
+
+    def flush_list() -> None:
+        if list_items:
+            items = "".join(f"<li><p>{it}</p></li>" for it in list_items)
+            result.append(f'<div class="ulist"><ul>{items}</ul></div>')
+            list_items.clear()
+
+    def flush_blocks() -> None:
+        flush_para()
+        flush_list()
+
+    i = 0
+    while i < len(lines):
+        line = lines[i].rstrip()
+
+        if line.startswith("[source") or line.strip() in ("----", "...."):
+            flush_blocks()
+            # Skip the [source] attribute line and/or the opening fence.
+            i += 2 if line.startswith("[source") else 1
+            code: list[str] = []
+            while i < len(lines) and lines[i].strip() not in ("----", "...."):
+                code.append(lines[i])
+                i += 1
+            body = html_escape("\n".join(code))
+            result.append(
+                '<div class="listingblock"><div class="content">'
+                f'<pre class="highlight"><code>{body}</code></pre></div></div>'
+            )
+        elif line.startswith("NOTE:"):
+            flush_blocks()
+            result.append(_html_admonition("NOTE", _html_inline(line[5:].strip())))
+        elif (
+            line.strip() == "[IMPORTANT]"
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "===="
+        ):
+            flush_blocks()
+            i += 2
+            imp: list[str] = []
+            while i < len(lines) and lines[i].strip() != "====":
+                imp.append(lines[i].strip())
+                i += 1
+            result.append(_html_admonition("IMPORTANT", _html_inline(" ".join(imp))))
+        elif (
+            _TABLE_ATTR_RE.match(line)
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "|==="
+        ):
+            flush_blocks()
+            attrs = _TABLE_ATTR_RE.match(line).group(1)
+            rows, header_row, i = _parse_asciidoc_table(lines, i + 1, attrs)
+            result.append(_render_table_html(rows, header_row, _table_colwidths(attrs)))
+        elif line.strip() == "|===":
+            flush_blocks()
+            rows, header_row, i = _parse_asciidoc_table(lines, i, "")
+            result.append(_render_table_html(rows, header_row))
+        elif re.match(r"^\[(cols|width|options|grid|frame|stripes|%|role).*\]$", line):
+            pass
+        elif line.strip().startswith("* ") or line.strip().startswith("- "):
+            flush_para()
+            list_items.append(_html_inline(line.strip()[2:]))
+        elif not line.strip():
+            flush_blocks()
+        else:
+            flush_list()
+            para.append(line.strip())
+        i += 1
+
+    flush_blocks()
+    return "\n".join(result)
+
+
 def replace_include_with_file_content(text: str) -> str:
     """Replace AsciiDoc ``include::`` directives with the content of the referenced file.
 
@@ -210,11 +948,56 @@ def replace_include_with_file_content(text: str) -> str:
     return pattern.sub(replace_block, text)
 
 
+_MD_LINK_RE = re.compile(r"link:(\S+)\[(.*?)\]")
+
+
+def _md_link_replacer(match: "re.Match[str]") -> str:
+    url, text = match.group(1), match.group(2)
+    return f"[{text if text else url}]({url})"
+
+
+def _md_inline(text: str) -> str:
+    return _MD_LINK_RE.sub(_md_link_replacer, text)
+
+
+def _render_table_markdown(rows: list[list[dict[str, str]]], header_row: bool) -> str:
+    """Render parsed table *rows* as a GitHub-flavoured Markdown pipe table.
+
+    GFM tables require a header row syntactically, so row 0 is always used
+    as the header line even when the source table set no explicit
+    ``%header`` (most of mSCP's label/value tables don't). `a`-style cells
+    are recursively rendered via `asciidoc_to_markdown`, with embedded
+    newlines collapsed to ``<br>`` since a pipe-table cell must be one line;
+    other cells are folded the same way, honoring `+`-forced breaks. Literal
+    ``|`` in cell content is escaped so it can't be read as a column break.
+    """
+    if not rows:
+        return ""
+    ncols = len(rows[0])
+
+    def cell_md(cell: dict[str, str]) -> str:
+        if cell["style"] == "a":
+            # Forced breaks already became explicit "<br>" (see the hard-break
+            # handling below); a plain "\n" here is just a block separator
+            # (e.g. between two paragraphs), so fold it to a space.
+            text = asciidoc_to_markdown(cell["text"]).replace("\n", " ")
+        else:
+            lines = [ln for ln in cell["text"].splitlines() if ln.strip()]
+            text = _fold_table_cell_lines(lines, _md_inline, "<br>", " ")
+        return text.replace("|", "\\|")
+
+    header = "| " + " | ".join(cell_md(c) for c in rows[0]) + " |"
+    separator = "| " + " | ".join(["---"] * ncols) + " |"
+    body_lines = ["| " + " | ".join(cell_md(c) for c in row) + " |" for row in rows[1:]]
+    return "\n".join([header, separator, *body_lines])
+
+
 def asciidoc_to_markdown(value: str) -> str:
     """Convert a subset of AsciiDoc syntax to GitHub-flavoured Markdown.
 
     Handles headers, NOTE/IMPORTANT admonitions, source code blocks,
-    tables (``|===``), unordered/ordered lists, block titles, and
+    `|===` PSV tables (rendered as GFM pipe tables), `` +``-terminated hard
+    line breaks, unordered/ordered lists, block titles, and
     ``link:url[text]`` macros.  Unsupported constructs are passed through
     with links replaced and trailing whitespace stripped.
 
@@ -228,12 +1011,6 @@ def asciidoc_to_markdown(value: str) -> str:
     result = []
     i = 0
 
-    link_pattern = re.compile(r"link:(\S+)\[(.*?)\]")
-
-    def link_replacer(match):
-        url, text = match.group(1), match.group(2)
-        return f"[{text if text else url}]({url})"
-
     while i < len(lines):
         line = lines[i].rstrip()
 
@@ -245,9 +1022,7 @@ def asciidoc_to_markdown(value: str) -> str:
 
         # NOTE block
         elif line.startswith("NOTE:"):
-            result.append(
-                f"> **NOTE:** {link_pattern.sub(link_replacer, line[5:].strip())}"
-            )
+            result.append(f"> **NOTE:** {_md_inline(line[5:].strip())}")
 
         # [IMPORTANT] block
         elif (
@@ -294,24 +1069,20 @@ def asciidoc_to_markdown(value: str) -> str:
             result.extend(code_lines)
             result.append("```")
 
-        # Table with |===
-        elif line.strip() == "|===":
-            i += 1
-            table_rows = []
-            while i < len(lines) and lines[i].strip() != "|===":
-                table_line = lines[i].strip()
-                if table_line.startswith("|"):
-                    cells = [cell.strip() for cell in table_line.lstrip("|").split("|")]
-                    table_rows.append(cells)
-                i += 1
+        # `[cols=...]` (+ optional `%header`) immediately followed by `|===`: a table.
+        elif (
+            _TABLE_ATTR_RE.match(line)
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "|==="
+        ):
+            attrs = _TABLE_ATTR_RE.match(line).group(1)
+            rows, header_row, i = _parse_asciidoc_table(lines, i + 1, attrs)
+            result.append(_render_table_markdown(rows, header_row))
 
-            if table_rows:
-                header = "| " + " | ".join(table_rows[0]) + " |"
-                separator = "| " + " | ".join(["---"] * len(table_rows[0])) + " |"
-                result.append(header)
-                result.append(separator)
-                for row in table_rows[1:]:
-                    result.append("| " + " | ".join(row) + " |")
+        # Bare `|===` table with no preceding attribute line.
+        elif line.strip() == "|===":
+            rows, header_row, i = _parse_asciidoc_table(lines, i, "")
+            result.append(_render_table_markdown(rows, header_row))
 
         # Skip AsciiDoc block attributes like [cols=...], [width=...], [options=...], etc.
         elif re.match(
@@ -336,7 +1107,13 @@ def asciidoc_to_markdown(value: str) -> str:
             result.append(line.strip())
 
         else:
-            result.append(link_pattern.sub(link_replacer, line.strip()))
+            stripped = line.strip()
+            # AsciiDoc's " +" at line end forces a line break; GFM's is <br>.
+            hard_break = stripped.endswith(" +") or stripped == "+"
+            if hard_break:
+                stripped = stripped[:-1].rstrip()
+            text = _md_inline(stripped)
+            result.append(text + "<br>" if hard_break else text)
 
         i += 1
 
@@ -380,7 +1157,7 @@ def _resolve_asset_dir(filename: str, dir_key: str) -> str:
     bundled default without replacing the entire directory.
 
     Args:
-        filename (str): The asset filename to look up (e.g. ``"mscp_theme.yml"``).
+        filename (str): The asset filename to look up (e.g. ``"asciidoctor.css"``).
         dir_key (str): Config key shared between ``config`` and
             ``config["custom"]`` (e.g. ``"themes_dir"``).
 
@@ -398,7 +1175,6 @@ def render_template(
     template_name: str,
     baseline: Baseline,
     b64logo: bytes,
-    pdf_theme: str,
     html_css: str,
     logo_path: Path,
     os_name: str,
@@ -408,7 +1184,7 @@ def render_template(
     template_dirs: list[str],
     themes_dir: str,
     logo_dir: str,
-    output_format: str = "adoc",
+    output_format: str = "html",
     language: str = "en",
 ) -> None:
     """Render a Jinja template against *baseline* data and write to *output_file*.
@@ -422,7 +1198,6 @@ def render_template(
         template_name (str): Filename of the template within *template_dirs*.
         baseline (Baseline): Baseline data model.
         b64logo (bytes): Base64-encoded logo image bytes.
-        pdf_theme (str): AsciiDoctor-PDF theme filename.
         html_css (str): CSS filename for HTML output.
         logo_path (Path): Absolute path to the logo file.
         os_name (str): Operating system name string.
@@ -463,14 +1238,53 @@ def render_template(
     env.filters["render_references"] = render_references
     env.filters["get_nested"] = get_nested
     env.filters["mobileconfig_payloads_to_xml"] = mobileconfig_info_to_xml
-    install_gettext = getattr(env, "install_gettext_translations", None)
-    if install_gettext is not None:
-        install_gettext(translations)
+    env.filters["ddm_info_to_json"] = ddm_info_to_json
+    env.install_gettext_translations(translations)
 
     if output_format == "markdown":
         env.filters["group_ulify"] = group_ulify_md
         env.filters["render_rules"] = render_rules_md
         env.filters["asciidoc_to_markdown"] = asciidoc_to_markdown
+
+    if output_format == "typst":
+        env.filters["group_ulify"] = group_ulify_typst
+        env.filters["render_rules"] = render_rules_typst
+        env.filters["render_references"] = render_references_typst
+        env.filters["asciidoc_to_typst"] = asciidoc_to_typst
+        env.filters["typst_escape"] = typst_escape
+
+    css_content: str = ""
+    dark_css_content: str = ""
+    default_theme: str = "system"
+    if output_format == "html":
+        env.filters["group_ulify"] = group_ulify_html
+        env.filters["render_rules"] = render_rules_html
+        env.filters["render_references"] = render_references_html
+        env.filters["asciidoc_to_html"] = asciidoc_to_html
+        # Inline BOTH the light and dark stylesheets so the HTML is self-contained
+        # and can switch theme at runtime with no network. The light sheet is the
+        # cascade base; the dark sheet is overlaid via a toggled ``media`` attribute
+        # in the template. ``html_css`` (set by ``--dark``) only picks the *initial*
+        # theme -- the in-page toggle can still override it and persists the choice.
+        if "-dark.css" in html_css:
+            light_name = html_css.replace("-dark.css", ".css")
+            dark_name = html_css
+            default_theme = "dark"
+        else:
+            light_name = html_css
+            dark_name = html_css.replace(".css", "-dark.css")
+
+        _css_path = Path(themes_dir, light_name)
+        if _css_path.exists():
+            css_content = _css_path.read_text()
+        else:
+            logger.warning(f"CSS not found for HTML output: {_css_path}")
+
+        _dark_css_path = Path(themes_dir, dark_name)
+        if _dark_css_path.exists():
+            dark_css_content = _dark_css_path.read_text()
+        else:
+            logger.warning(f"Dark CSS not found for HTML output: {_dark_css_path}")
 
     template: Template = env.get_template(template_name)
 
@@ -500,6 +1314,13 @@ def render_template(
         baseline_dict["tailored"] = False
         baseline_dict["benchmark_description"] = benchmark_description
 
+        os_key = os_name.strip().lower()
+        baseline_dict["pre_release"] = benchmark in (
+            mscp_data.get("pre_release_benchmarks", {})
+            .get(os_key, {})
+            .get(version_info.get("os_version"), [])
+        )
+
     if any(author.is_additional for author in baseline.authors):
         baseline_dict["additional_authors"] = True
 
@@ -512,7 +1333,6 @@ def render_template(
         images_dir=images_dir,
         logo=logo_path.name,
         pdflogo=b64logo.decode("ascii"),
-        pdf_theme=pdf_theme,
         html_css=html_css,
         show_all_tags=show_all_tags,
         os_name=os_name.strip().lower(),
@@ -524,45 +1344,88 @@ def render_template(
         acronyms=acronyms_data.get("acronyms", []),
         terminology=acronyms_data.get("terminology", []),
         NIX_OS=NIX_OS,
+        css_content=css_content,
+        dark_css_content=dark_css_content,
+        default_theme=default_theme,
     )
 
     output_file.write_text(rendered_output)
 
 
+def _generate_typst_pdf(output_file: Path, logo_path: Path) -> None:
+    """Compile a rendered ``.typ`` file to PDF using the ``typst`` package.
+
+    typst is provided as a Python dependency (``uv sync``), so it is called via
+    its binding rather than an external binary.  It is the only PDF engine, so a
+    missing package or a failed compile is a hard error (``sys.exit``) with an
+    actionable hint — there is no Ruby fallback.
+
+    Args:
+        output_file (Path): The rendered ``.typ`` file to compile.
+        logo_path (Path): Absolute path to the title-page logo image.
+    """
+    try:
+        import typst
+    except ImportError:
+        logger.error(
+            "The 'typst' package is required to generate the PDF but is not "
+            "installed. Run 'uv sync' (it is a project dependency), then re-run."
+        )
+        sys.exit(1)
+
+    build_dir: Path = output_file.parent
+    # Typst can only read files under its --root; copy the logo next to the
+    # .typ and reference it by name from the template.
+    try:
+        dest_logo: Path = build_dir / logo_path.name
+        if logo_path.resolve() != dest_logo.resolve():
+            shutil.copy(logo_path, dest_logo)
+    except OSError as e:
+        logger.warning(f"Could not stage logo for typst: {e}")
+
+    pdf_file: Path = output_file.with_suffix(".pdf")
+    try:
+        typst.compile(str(output_file), output=str(pdf_file), root=str(build_dir))
+    except Exception as e:  # typst raises on compile errors
+        logger.error(f"typst compile failed: {e}")
+        sys.exit(1)
+    if not pdf_file.exists():
+        logger.error("typst compile produced no PDF.")
+        sys.exit(1)
+    logger.info(f"PDF generated: {pdf_file}")
+    remove_file(dest_logo)
+    remove_file(output_file)
+
+
 def generate_documents(
-    spinner: Yaspin,
     output_file: Path,
     baseline: Baseline,
     b64logo: bytes,
-    pdf_theme: str,
     html_css: str,
     logo_path: Path,
     os_name: str,
     version_info: dict[str, Any],
     show_all_tags: bool = False,
-    output_format: str = "adoc",
+    output_format: str = "html",
     language: str = "en",
 ) -> None:
-    """Render guidance documents and, for AsciiDoc output, invoke AsciiDoctor.
+    """Render a guidance document in the requested format.
 
-    Resolves template, theme, and image directories by searching the custom
-    directory first and falling back to the bundled defaults, then calls
-    `render_template`.  For AsciiDoc output also runs ``bundle exec
-    asciidoctor`` and ``bundle exec asciidoctor-pdf`` to produce HTML and
-    PDF output.
+    Resolves template and image directories (custom dir shadows bundled
+    defaults) and calls `render_template`.  For ``"typst"`` output it then
+    compiles the rendered ``.typ`` to PDF via the ``typst`` binary.  HTML and
+    Markdown are produced by Jinja alone — no external tools, no Ruby.
 
     Args:
-        spinner (Yaspin): Spinner for progress feedback.
-        output_file (Path): Destination ``.adoc`` or ``.md`` file.
+        output_file (Path): Destination file (``.typ`` / ``.html`` / ``.md``).
         baseline (Baseline): Baseline data model.
         b64logo (bytes): Base64-encoded logo image bytes.
-        pdf_theme (str): AsciiDoctor-PDF theme filename or absolute path.
-        html_css (str): CSS filename for HTML output.
+        html_css (str): CSS filename; also selects the light/dark theme.
         logo_path (Path): Absolute path to the logo file.
         os_name (str): Operating system name string.
         version_info (dict[str, Any]): OS/compliance version metadata.
         show_all_tags (bool): Whether to render all tags. Defaults to ``False``.
-        output_format (str): ``"adoc"`` (default) or ``"markdown"``.
+        output_format (str): ``"typst"``, ``"html"``, or ``"markdown"``.
         language (str): BCP-47 language code. Defaults to ``"en"``.
     """
     # Determine whether any custom content is active (for template context).
@@ -573,15 +1436,22 @@ def generate_documents(
     _template_dirs: list[str] = search_paths("documents_templates_dir")
 
     # Static assets: prefer the custom directory when it contains the file.
-    _themes_dir: str = _resolve_asset_dir(pdf_theme, "themes_dir")
+    # The stylesheet locates the themes dir for all formats now that PDF/HTML
+    # both derive their look from the CSS / typst theme.
+    _themes_dir: str = _resolve_asset_dir(html_css, "themes_dir")
     _logo_dir: str = _resolve_asset_dir(logo_path.name, "images_dir")
+
+    # Each format uses its own self-contained template tree.
+    main_template: str = {
+        "typst": "typst/main.typ.jinja",
+        "html": "html/main.html.jinja",
+    }.get(output_format, "main.jinja")
 
     render_template(
         output_file,
-        "main.jinja",
+        main_template,
         baseline,
         b64logo,
-        pdf_theme,
         html_css,
         logo_path,
         os_name,
@@ -595,30 +1465,10 @@ def generate_documents(
         language,
     )
 
-    if output_format == "adoc":
-        spinner.spinner = Spinners.dots
-        spinner.text = "Checking for asciidoctor components"
-        time.sleep(1)
-        _, asciidoctor_err = run_command("bundle show asciidoctor")
-        _, asciidoctor_pdf_err = run_command("bundle show asciidoctor-pdf")
+    if output_format == "typst":
+        _generate_typst_pdf(output_file, logo_path)
 
-        if asciidoctor_err or asciidoctor_pdf_err:
-            spinner.text = "Installing missing asciidoctor components"
-            time.sleep(1)
-            _, error = run_command(
-                "bundle install --gemfile Gemfile --path mscp_gems --binstubs"
-            )
-            if error:
-                logger.error(f"Bundle install failed: {error}")
-                sys.exit()
-        spinner.text = "Generating HTML file from adoc"
-        time.sleep(1)
-        _, error = run_command(f"bundle exec asciidoctor '{output_file}'")
-        if error:
-            logger.error(f"Error converting to ADOC: {error}")
-            sys.exit()
-        spinner.text = "Generating PDF file from adoc"
-        _, error = run_command(f"bundle exec asciidoctor-pdf '{output_file}'")
-        if error:
-            logger.error(f"Error converting to ADOC: {error}")
-            sys.exit()
+    elif output_format == "html":
+        # Pure-Python HTML: render_template already wrote the self-contained
+        # file (CSS inlined). No external tool, no Ruby.
+        logger.info(f"HTML generated: {output_file}")

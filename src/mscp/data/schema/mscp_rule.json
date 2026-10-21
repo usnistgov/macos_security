@@ -187,9 +187,6 @@
                         "13.0": {
                             "$ref": "#/$defs/osDef"
                         },
-                        "14.0": {
-                            "$ref": "#/$defs/osDef"
-                        },
                         "15.0": {
                             "$ref": "#/$defs/osDef"
                         },
@@ -199,6 +196,9 @@
                         "introduced": {
                             "type": "string",
                             "pattern": "^(\\d+(\\.\\d+){1,2}|-1)$"
+                        },
+                        "27.0": {
+                            "$ref": "#/$defs/osDef"
                         }
                     },
                     "additionalProperties": false
@@ -269,6 +269,9 @@
                         },
                         "introduced": {
                             "type": "string"
+                        },
+                        "27.0": {
+                            "$ref": "#/$defs/osDef"
                         }
                     },
                     "additionalProperties": false
@@ -309,6 +312,47 @@
                         },
                         "introduced": {
                             "type": "string"
+                        },
+                        "27.0": {
+                            "$ref": "#/$defs/osDef"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "ubuntu": {
+                    "type": "object",
+                    "description": "Schema for identifying components to support Ubuntu Linux",
+                    "properties": {
+                        "enforcement_info": {
+                            "$ref": "#/$defs/enforcement_infoDef"
+                        },
+                        "22.04": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "24.04": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "26.04": {
+                            "$ref": "#/$defs/osDef"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "redhat": {
+                    "type": "object",
+                    "description": "Schema for identifying components to support Red Hat Enterprise Linux",
+                    "properties": {
+                        "enforcement_info": {
+                            "$ref": "#/$defs/enforcement_infoDef"
+                        },
+                        "8": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "9": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "10": {
+                            "$ref": "#/$defs/osDef"
                         }
                     },
                     "additionalProperties": false
@@ -348,6 +392,9 @@
                 },
                 {
                     "$ref": "#/$defs/ArrayOfStrings"
+                },
+                {
+                    "$ref": "#/$defs/ArrayOfObjects"
                 },
                 {
                     "type": "object",
@@ -428,7 +475,8 @@
                         "com.apple.configuration.external-intelligence.settings",
                         "com.apple.configuration.softwareupdate.settings",
                         "com.apple.configuration.siri.settings",
-                        "com.apple.configuration.keyboard.settings"
+                        "com.apple.configuration.keyboard.settings",
+                        "com.apple.configuration.app.settings"
                     ]
                 },
                 "service": {
@@ -505,6 +553,9 @@
                 },
                 "boolean": {
                     "type": "boolean"
+                },
+                "exit_code": {
+                    "type": "integer"
                 }
             }
         },
@@ -527,14 +578,26 @@
                         }
                     },
                     "anyOf": [
-                        { "required": ["shell"] },
-                        { "required": ["additional_info"] }
+                        {
+                            "required": [
+                                "shell"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "additional_info"
+                            ]
+                        }
                     ],
                     "if": {
-                        "required": ["shell"]
+                        "required": [
+                            "shell"
+                        ]
                     },
                     "then": {
-                        "required": ["result"]
+                        "required": [
+                            "result"
+                        ]
                     }
                 },
                 "fix": {
@@ -549,8 +612,16 @@
                         }
                     },
                     "anyOf": [
-                        { "required": ["shell"] },
-                        { "required": ["additional_info"] }
+                        {
+                            "required": [
+                                "shell"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "additional_info"
+                            ]
+                        }
                     ]
                 },
                 "default_state": {
@@ -566,8 +637,16 @@
                         }
                     },
                     "anyOf": [
-                        { "required": ["shell"] },
-                        { "required": ["note"] }
+                        {
+                            "required": [
+                                "shell"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "note"
+                            ]
+                        }
                     ]
                 }
             },

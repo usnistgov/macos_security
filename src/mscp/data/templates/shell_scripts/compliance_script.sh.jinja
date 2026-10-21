@@ -89,6 +89,8 @@ audit_csv="/Library/Logs/${CURR_HOSTNAME}_{{ audit_name }}_baseline.csv"
 
 baseline_name="{{ baseline_name }}"
 
+declare -A results_array
+
 # pause function
 pause(){
   vared -p "Press [Enter] key to continue..." -c fackEnterKey
@@ -116,6 +118,16 @@ logmessage(){
   fi
 }
 
+csv_escape(){
+  # Escape a field per RFC 4180: double any embedded double quotes, then wrap
+  # the whole field in double quotes so commas, quotes, CR and LF are literal.
+  local field="$1"
+  local quote='"'
+  field="${field//$quote/$quote$quote}"
+  field="$quote$field$quote"
+  printf '%s' "$field"
+}
+
 logcsv(){
   local rule_name="$1"
   local result_status="$2"
@@ -124,10 +136,13 @@ logcsv(){
   local exemption="$5"
 
   if [[ ! -f "$audit_csv" ]]; then
-    echo "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
+    printf '%s\n' "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
   fi
 
-  echo "$rule_name,$result_status,$result,$expected,$exemption" >> "$audit_csv"
+  # Use printf, not echo: under zsh `echo` interprets backslash escapes in the
+  # field values (e.g. an embedded `\c` truncates the line), which would corrupt
+  # the CSV even after csv_escape() has quoted each field.
+  printf '%s\n' "$(csv_escape "$rule_name"),$(csv_escape "$result_status"),$(csv_escape "$result"),$(csv_escape "$expected"),$(csv_escape "$exemption")" >> "$audit_csv"
 }
 
 ask() {
@@ -212,7 +227,6 @@ reset_plist(){
     rm -f "$audit_log"
     rm -f "$audit_csv"
   fi
-  exit 0
 }
 
 # Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
@@ -289,22 +303,21 @@ generate_stats(){
 
 rule_fix(){
   local audit_score=$($plb -c "print $1:finding" $audit_plist)
-  local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt"]")
-  local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt_reason"]")
+  local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))['exempt']")
+  local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))['exempt_reason']")
 
-  if [[ ! $exempt == "1" ]] || [[ -z $exempt ]]; then
-    if [[ $audit_score == "true" ]]; then
-      ask "$1 - Run the command(s)-> $2" N
-      if [[ $? == 0 ]]; then
-        logmessage "Running the command to configure the settings for: $1 ..."
-        eval "$2"
-      fi
-    else
-      logmessage "Settings for: $1 already configured, continuing..."
-    fi
-  elif [[ ! -z "$exempt_reason" ]]; then
+  if [[ $exempt == "1" ]]; then
     logmessage "$1 has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
+  elif [[ $audit_score == "true" ]]; then
+    ask "$1 - Run the command(s)-> $2" N
+    if [[ $? == 0 ]]; then
+      logmessage "Running the command to configure the settings for: $1 ..."
+      eval "$2"
+    fi
+  else
+    logmessage "Settings for: $1 already configured, continuing..."
   fi
+
 }
 
 run_scan(){
@@ -333,6 +346,28 @@ run_scan(){
   {% endfor %}
 
 } 2>/dev/null
+
+print_json(){  
+  json_results="{"
+  for key in ${(k)results_array}; do
+    value="${results_array[$key]}"
+    if [[ "$value" == "true" ]] || [[ "$value" == "false" ]]; then    
+      json_results+="\"${key}\":${value},"
+    elif [[ "$value" =~ '^-?[0-9]+$' ]]; then
+      json_results+="\"${key}\":${value},"
+    elif [[ "$value" =~ '^-?[0-9]*\.[0-9]+$' ]]; then    
+      json_results+="\"${key}\":${value},"
+    else      
+      escaped_value=$(printf '%s' "$value" | /usr/bin/jq -Rs '.')
+      json_results+="\"${key}\":${escaped_value},"      
+    fi
+  done
+  
+  json_results="${json_results%,}"
+  json_results+="}"
+  
+  printf '%s\n' "$json_results" | /usr/bin/jq '.'
+}
 
 run_fix(){
   if [[ ! -e "$audit_plist" ]]; then
@@ -394,7 +429,6 @@ usage=(
     "                       2 - show minimal output"
   )
 
-set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
 
 # Look for managed arguments for compliance script
 if [[ $# -eq 0 ]];then
@@ -411,12 +445,14 @@ if (args && args.count > 0) {
 EOS
 )
     if [[ -n "$compliance_args" ]]; then
-        logmessage "Managed arguments found for compliance script, setting: $compliance_args"
+        if [[ "$compliance_args" != *"json"* ]]; then
+            logmessage "Managed arguments found for compliance script, setting: $compliance_args"
+        fi        
         set -- ${(z)compliance_args}
     fi
 fi
-  
-zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
+
+zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -json=json -quiet:=quiet || { print -l $usage && return }
 
 [[ -z "$flag_help" ]] || { print -l $usage && return }
 
@@ -426,13 +462,14 @@ fi
 
 if [[ $reset ]] || [[ $reset_all ]]; then reset_plist; fi
 
-if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
+if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]] || [[ $json ]]; then
     if [[ $fix ]]; then run_fix; fi
     if [[ $check ]]; then run_scan; fi
     if [[ $cfc ]]; then run_scan; run_fix; run_scan; fi
     if [[ $stats ]];then generate_stats; fi
     if [[ $compliant_opt ]];then compliance_count "compliant"; fi
     if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
+    if [[ $json ]]; then print_json; fi
 else
     while true; do
         show_menus

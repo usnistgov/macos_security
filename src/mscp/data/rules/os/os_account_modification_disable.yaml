@@ -14,18 +14,24 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-96999-8
       macos_26:
         - CCE-95155-8
       macos_15:
         - CCE-94155-9
       macos_14:
         - CCE-93012-3
+      ios_27:
+        - CCE-97272-9
       ios_26:
         - CCE-95430-5
       ios_18:
         - CCE-94514-7
       ios_17:
         - CCE-93468-7
+      visionos_27:
+        - CCE-97427-9
       visionos_26:
         - CCE-95560-9
     800-53r5:
@@ -42,6 +48,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002120
       macos_26:
         - APPL-26-002120
       macos_15:
@@ -72,6 +80,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -80,21 +92,15 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowAccountModification').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowAccountModification")) == false && s.objectIsForcedForKey("allowAccountModification")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '14.0'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -109,6 +115,7 @@ platforms:
         - name: indigo_high
     introduced: '7.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.0'

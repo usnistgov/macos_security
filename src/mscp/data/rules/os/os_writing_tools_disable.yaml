@@ -5,14 +5,20 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97111-9
       macos_26:
         - CCE-95334-9
       macos_15:
         - CCE-94328-2
+      ios_27:
+        - CCE-97401-4
       ios_26:
         - CCE-96703-4
       ios_18:
         - CCE-94563-4
+      visionos_27:
+        - CCE-97469-1
       visionos_26:
         - CCE-95596-3
     800-53r5:
@@ -31,6 +37,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-005160
       macos_26:
         - APPL-26-005160
       macos_15:
@@ -53,6 +61,8 @@ references:
       ios_26:
         - 2.9.4 (level 1 - End-User Owned Devices)
         - 3.10.4 (level 1 - Institutionally-Owned Devices)
+      macos_27:
+        - 2.5.1.2 (level 1)
   bsi:
     indigo:
       ios_26:
@@ -61,6 +71,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -74,16 +90,15 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowWritingTools').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowWritingTools")) == false && s.objectIsForcedForKey("allowWritingTools")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '15.0'
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: cis_lvl1_byod
         - name: cis_lvl2_byod
@@ -92,12 +107,14 @@ platforms:
         - name: indigo_base
         - name: indigo_high
     '18.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: indigo_base
         - name: indigo_high
     introduced: '18.0'
   visionOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
     introduced: '2.4'

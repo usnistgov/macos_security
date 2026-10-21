@@ -14,7 +14,7 @@ from .baseline import Author, Baseline, Profile
 from .legacy_baseline import LegacyBaseline, LegacyProfile
 
 # from .filehandler import FileHandler
-from .macsecurityrule import Macsecurityrule, Sectionmap
+from .macsecurityrule import Macsecurityrule, Sectionmap, resolve_enforcement_info
 from .payload import Payload
 from .rule_library import RuleLibrary
 
@@ -28,4 +28,5 @@ __all__ = [
     "Profile",
     "RuleLibrary",
     "Sectionmap",
+    "resolve_enforcement_info",
 ]

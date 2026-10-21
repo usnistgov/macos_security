@@ -4,6 +4,8 @@ discussion: 'Exchange ActiveSync system can disable the Reminders service for an
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97321-4
       ios_26:
         - CCE-95617-7
       ios_18:
@@ -26,6 +28,7 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

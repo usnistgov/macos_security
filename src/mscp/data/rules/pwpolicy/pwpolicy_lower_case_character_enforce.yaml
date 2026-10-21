@@ -11,6 +11,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97118-4
       macos_26:
         - CCE-95344-8
       macos_15:
@@ -35,9 +37,9 @@ references:
       - 5.2
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersLowerCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}'
@@ -82,3 +84,4 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - hicp_lp
+  - 800-171

@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97022-8
       macos_26:
         - CCE-95191-3
       macos_15:
@@ -15,9 +17,9 @@ references:
       - AC-2(11)
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/fdesetup list | /usr/bin/awk -F',' '{print $1}'

@@ -4,16 +4,22 @@ discussion: Apple Intelligence features such as Safari Reader Summary that use o
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97071-5
       macos_26:
         - CCE-95286-1
       macos_15:
         - CCE-94570-9
+      ios_27:
+        - CCE-97375-0
       ios_26:
         - CCE-95518-7
       ios_18:
         - CCE-94577-4
       visionos_26:
         - CCE-95591-4
+      visionos_27:
+        - CCE-97464-2
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -44,19 +50,19 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowSafariSummary').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowSafariSummary")) == false && s.objectIsForcedForKey("allowSafariSummary")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '15.4'
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
@@ -66,6 +72,8 @@ platforms:
       supervised: true
     introduced: '18.4'
   visionOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
     introduced: '2.4'

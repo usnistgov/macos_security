@@ -5,12 +5,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97280-2
       ios_26:
         - CCE-95644-1
       ios_18:
         - CCE-94425-6
       ios_17:
         - CCE-93411-7
+      visionos_27:
+        - CCE-97430-3
       visionos_26:
         - CCE-95563-3
     800-53r5:
@@ -56,6 +60,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -87,6 +92,7 @@ platforms:
           severity: low
     introduced: '12.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

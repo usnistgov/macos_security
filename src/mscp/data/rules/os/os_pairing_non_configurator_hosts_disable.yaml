@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97356-0
       ios_26:
         - CCE-95503-9
       ios_18:
@@ -51,6 +53,8 @@ references:
       - 4.8
 platforms:
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
