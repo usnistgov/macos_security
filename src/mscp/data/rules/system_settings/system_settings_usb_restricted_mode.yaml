@@ -52,6 +52,8 @@ references:
         - APPL-15-005090
       macos_14:
         - APPL-14-005090
+      ios_27:
+        - AIOS-27-011400
       ios_26:
         - AIOS-26-012200
       ios_18:
@@ -115,6 +117,9 @@ platforms:
   iOS:
     '27.0':
       supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: true
       benchmarks:
