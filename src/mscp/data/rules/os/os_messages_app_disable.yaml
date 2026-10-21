@@ -60,8 +60,7 @@ mobileconfig_info:
   - PayloadType: com.apple.alr
     PayloadContent:
       - DenyList:
-          - SigningID:
-              - com.apple.MobileSMS
+          - SigningID: com.apple.MobileSMS
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed

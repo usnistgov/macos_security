@@ -9,6 +9,10 @@ references:
         - CCE-97263-8
       macos_26:
         - CCE-96739-8
+      ios_27:
+        - CCE-97268-7
+      ios_26:
+        - CCE-96740-6
       visionos_26:
         - CCE-96711-7
     800-53r5:
@@ -18,6 +22,8 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_27:
+        - AIOS-27-013900
       visionos_26:
         - AVOS-26-015500
     sfr:
@@ -44,6 +50,15 @@ platforms:
           string: 'true'
         fix:
           additional_info: This is implemented by Declarative Device Management (DDM) or by configuration profile.
+  iOS:
+    '27.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+    '26.0':
+      supervised: true
+    introduced: '-1'
   visionOS:
     '26.0':
       benchmarks:
