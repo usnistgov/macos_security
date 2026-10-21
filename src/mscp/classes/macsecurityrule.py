@@ -127,6 +127,8 @@ class Macsecurityrule(BaseModelWithAccessors):
         tags: Tag list categorising the rule (e.g. ``"inherent"``,
             ``"permanent"``, ``"n_a"``, ``"supplemental"``).
         result_value: Expected result for compliance, when applicable.
+        result_value_is_base64: When ``True``, ``result_value`` holds a raw
+            string that must be base64-encoded after ODV substitution.
         mobileconfig_info: Configuration profile payloads when the rule is
             enforced via a profile; ``None`` otherwise.
         ddm_info: Declarative Device Management payload, when applicable.
@@ -160,6 +162,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     odv: dict[str, Any] | None = None
     tags: list[str] = Field(default_factory=list)
     result_value: str | int | bool | None = None
+    result_value_is_base64: bool | None = False
     result_exit_code: int | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
@@ -252,6 +255,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             logger.debug("Transforming rule: {}", rule_id)
 
             result_value: str | int | bool | None = None
+            result_base64: bool | None = False
             exit_code: int | None = None
             check_value: str | None = None
             fix_value: str | None = None
@@ -341,12 +345,12 @@ class Macsecurityrule(BaseModelWithAccessors):
                         if k == "exit_code":
                             exit_code = v
                             break
-                        elif isinstance(v, (int, bool, str)):
+                        elif k == "base64":
+                            result_base64 = True
                             result_value = v
                             break
-                        elif k == "base64":
-                            result_encoded: bytes = base64.b64encode(v.encode("UTF-8"))
-                            result_value = result_encoded.decode("utf-8")
+                        elif isinstance(v, (int, bool, str)):
+                            result_value = v
                             break
 
                 if check_shell and fix_shell:
@@ -427,6 +431,8 @@ class Macsecurityrule(BaseModelWithAccessors):
             disa: dict[str, Any] = {}
             cis: dict[str, Any] = {}
             bsi: dict[str, Any] = {}
+            bzk: dict[str, Any] = {}
+            hhs: dict[str, Any] = {}
             custom_refs: dict[str, Any] = {}
 
             for ref_key in reference_keys:
@@ -438,6 +444,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                     cis: dict[str, Any] = rule_yaml["references"].get("cis", {})
                 elif ref_key == "bsi":
                     bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})
+                elif ref_key == "bzk":
+                    bzk: dict[str, Any] = rule_yaml["references"].get("bzk", {})
+                elif ref_key == "hhs":
+                    hhs: dict[str, Any] = rule_yaml["references"].get("hhs", {})
                 elif ref_key == "custom":
                     for custom_ref_key in rule_yaml["references"]["custom"]:
                         custom_refs[custom_ref_key] = rule_yaml["references"][
@@ -485,6 +495,17 @@ class Macsecurityrule(BaseModelWithAccessors):
                         bsi["indigo"], list
                     ):
                         bsi["indigo"] = [bsi["indigo"]]
+            if bzk:
+                if "bio" in bzk and isinstance(bzk["bio"], dict):
+                    bzk["bio"] = bzk["bio"].get(os_typeversion)
+                    if bzk["bio"] is not None and not isinstance(bzk["bio"], list):
+                        bzk["bio"] = [bzk["bio"]]
+
+            if hhs:
+                if "hicp" in hhs and isinstance(hhs["hicp"], dict):
+                    hhs["hicp"] = hhs["hicp"].get(os_typeversion)
+                    if hhs["hicp"] is not None and not isinstance(hhs["hicp"], list):
+                        hhs["hicp"] = [hhs["hicp"]]
 
             if custom_refs:
                 rule_yaml["references"]["custom_refs"] = {}
@@ -494,6 +515,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule = cls(
                     **rule_yaml,
                     result_value=result_value,
+                    result_value_is_base64=result_base64,
                     result_exit_code=exit_code,
                     customized=customized_fields,
                     mobileconfig_info=payloads,
@@ -711,6 +733,10 @@ class Macsecurityrule(BaseModelWithAccessors):
     def _fill_in_odv(self, parent_values: str) -> None:
         """Replace ``$ODV`` placeholders in rule fields with the resolved value.
 
+        After substituting ``$ODV`` in all relevant fields, if
+        ``result_value_is_base64`` is ``True`` the final ``result_value`` is
+        base64-encoded so that encoding always happens after ODV resolution.
+
         Args:
             parent_values: Key to look up in ``self.odv``. Expected values
                 include ``"custom"``, ``"recommended"``, or a specific
@@ -759,6 +785,12 @@ class Macsecurityrule(BaseModelWithAccessors):
             value = getattr(self, field, None)
             if value is not None:
                 setattr(self, field, replace_odv_in_obj(value))
+
+            if field == "result_value":
+                if self.result_value_is_base64:
+                    result_encoded: bytes = base64.b64encode(odv_value.encode("UTF-8"))
+                    result_value = result_encoded.decode("utf-8")
+                    setattr(self, field, result_value)
 
         if self.mobileconfig_info is not None:
             for payload in self.mobileconfig_info:

@@ -41,7 +41,10 @@ references:
       - 3.L.C
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '26.0':
       benchmarks:
         - name: nlmapgov_plus

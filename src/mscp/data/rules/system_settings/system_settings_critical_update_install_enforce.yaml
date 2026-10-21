@@ -51,6 +51,8 @@ platforms:
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '26.0':
       enforcement_info:
         check:
