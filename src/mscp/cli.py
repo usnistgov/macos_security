@@ -181,7 +181,7 @@ def validate_file(arg: str) -> Path | None:
 
 def valid_date(date_str: str) -> str:
     try:
-        datetime.strptime(date_str, "%Y-%m-%d")
+        datetime.strptime(date_str, "%Y-%m-%d").astimezone()
         return date_str
     except ValueError:
         raise argparse.ArgumentTypeError("Date must be in MM-DD-YYYY format")
