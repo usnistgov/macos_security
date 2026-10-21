@@ -101,3 +101,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
   - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
