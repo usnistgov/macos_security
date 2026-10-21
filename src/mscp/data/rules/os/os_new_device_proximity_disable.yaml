@@ -50,7 +50,7 @@ references:
   cis:
     benchmark:
       ios_26:
-        - 3.2.1.28 (level 1 - Institutionally-Owned Devices)
+        - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.28 (level 1 - Institutionally-Owned Devices)
       ios_17:

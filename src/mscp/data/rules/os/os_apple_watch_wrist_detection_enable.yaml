@@ -43,8 +43,8 @@ references:
   cis:
     benchmark:
       ios_26:
-        - 2.2.1.13 (level 1 - End-User Owned Devices)
-        - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
+        - 2.2.1.12 (level 1 - End-User Owned Devices)
+        - 3.2.1.26 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.13 (level 1 - End-User Owned Devices)
         - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
