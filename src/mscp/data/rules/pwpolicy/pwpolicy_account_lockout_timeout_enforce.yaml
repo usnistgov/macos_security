@@ -101,5 +101,5 @@ mobileconfig_info:
       - minutesUntilFailedLoginReset: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
-  ddm_key: MaximumGracePeriodInMinutes
+  ddm_key: FailedAttemptsResetInMinutes
   ddm_value: $ODV

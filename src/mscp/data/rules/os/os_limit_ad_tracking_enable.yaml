@@ -26,6 +26,8 @@ references:
       - CCI-000370
       - CCI-001199
     disa_stig:
+      ios_27:
+        - AIOS-27-009700
       ios_26:
         - AIOS-26-010500
       ios_18:
@@ -57,6 +59,9 @@ platforms:
   iOS:
     '27.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: low
     '26.0':
       supervised: false
       benchmarks:

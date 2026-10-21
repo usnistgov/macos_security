@@ -37,6 +37,8 @@ references:
       - 03.05.07
   disa:
     disa_stig:
+      ios_27:
+        - AIOS-27-006100
       ios_26:
         - AIOS-26-006600
       ios_18:
@@ -95,6 +97,9 @@ platforms:
   iOS:
     '27.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:
