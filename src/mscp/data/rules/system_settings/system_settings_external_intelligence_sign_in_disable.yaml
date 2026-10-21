@@ -40,6 +40,8 @@ references:
     disa_stig:
       macos_27:
         - APPL-27-005200
+      ios_27:
+        - AIOS-27-013800
       ios_26:
         - AIOS-26-015400
       ios_18:
@@ -109,7 +111,11 @@ platforms:
           string: 'PASS'
     introduced: '15.2'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: true
       benchmarks:

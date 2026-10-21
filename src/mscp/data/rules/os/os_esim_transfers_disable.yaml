@@ -15,6 +15,8 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_27:
+        - AIOS-27-016000
       ios_26:
         - AIOS-26-017900
       ios_18:
@@ -23,7 +25,11 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: low
     '26.0':
       supervised: false
       benchmarks:
