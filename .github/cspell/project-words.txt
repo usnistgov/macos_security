@@ -368,3 +368,9 @@ ulist
 Segoe
 toctitle
 emph
+dsmemberutil
+jdoe
+asmith
+mlkem
+tolower
+capsys
