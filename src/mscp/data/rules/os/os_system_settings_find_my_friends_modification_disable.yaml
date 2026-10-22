@@ -19,6 +19,8 @@ references:
       - CM-7(1)
   disa:
     disa_stig:
+      ios_27:
+        - AIOS-27-012400
       ios_26:
         - AIOS-26-013100
     sfr:
@@ -40,6 +42,9 @@ platforms:
   iOS:
     '27.0':
       supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: low
     '26.0':
       supervised: true
       benchmarks:

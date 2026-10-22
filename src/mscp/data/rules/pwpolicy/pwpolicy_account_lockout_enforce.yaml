@@ -47,6 +47,8 @@ references:
         - APPL-15-000022
       macos_14:
         - APPL-14-000022
+      ios_27:
+        - AIOS-27-006400
       ios_26:
         - AIOS-26-006900
       ios_18:
@@ -127,6 +129,8 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:

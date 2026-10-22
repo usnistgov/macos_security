@@ -25,6 +25,9 @@ references:
     cci:
       - CCI-001199
     disa_stig:
+      ios_27:
+        - AIOS-27-009400
+        - AIOS-27-009500
       ios_26:
         - AIOS-26-010400
       ios_18:
@@ -57,6 +60,9 @@ platforms:
   iOS:
     '27.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: high
     '26.0':
       supervised: false
       benchmarks:
@@ -110,3 +116,7 @@ mobileconfig_info:
   - PayloadType: com.apple.mobiledevice.passwordpolicy
     PayloadContent:
       - forcePIN: true
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: RequirePasscode
+  ddm_value: true

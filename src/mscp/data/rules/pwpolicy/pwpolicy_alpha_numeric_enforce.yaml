@@ -1,7 +1,7 @@
 id: pwpolicy_alpha_numeric_enforce
 title: Require Passwords Contain a Minimum of One Numeric Character
 discussion: |
-  The macOS _MUST_ be configured to require at least one numeric character be used when a password is created.
+  The system _MUST_ be configured to require at least one numeric character be used when a password is created.
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 

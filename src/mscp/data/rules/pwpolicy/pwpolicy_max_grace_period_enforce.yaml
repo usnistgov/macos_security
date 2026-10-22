@@ -22,6 +22,8 @@ references:
     cci:
       - CCI-000057
     disa_stig:
+      ios_27:
+        - AIOS-27-006300
       ios_26:
         - AIOS-26-006800
       ios_18:
@@ -66,6 +68,8 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:
@@ -141,3 +145,7 @@ mobileconfig_info:
   - PayloadType: com.apple.mobiledevice.passwordpolicy
     PayloadContent:
       - maxGracePeriod: $ODV
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: MaximumGracePeriodInMinutes
+  ddm_value: $ODV

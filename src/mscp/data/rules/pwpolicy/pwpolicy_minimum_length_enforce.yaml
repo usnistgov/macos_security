@@ -1,7 +1,7 @@
 id: pwpolicy_minimum_length_enforce
 title: Require a Minimum Password Length of $ODV Characters
 discussion: |
-  The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
+  The operating system _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 
@@ -48,6 +48,8 @@ references:
         - APPL-15-003010
       macos_14:
         - APPL-14-003010
+      ios_27:
+        - AIOS-27-006000
       ios_26:
         - AIOS-26-006500
       ios_18:
@@ -144,6 +146,8 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:
