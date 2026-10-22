@@ -1,7 +1,7 @@
 id: os_mcx_disable_disable
 title: Disable the Ability for an Admin to Disable Managed Preferences
 discussion: |-
-  A local adminisator can bypass or disable managed preferences for their login session by holding down the shift key if the key AdminMayDisableMCX is set to true. This setting _MUST_ be disabled to ensure that managed preferences are enforced for all users on the system.
+  A local administrator can bypass or disable managed preferences for their login session by holding down the Shift key if the key AdminMayDisableMCX is set to true. This setting _MUST_ be disabled to ensure that managed preferences are enforced for all users on the system.
 references:
   nist:
     cce:

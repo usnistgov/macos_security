@@ -1,6 +1,6 @@
 id: os_messages_summary_disable
 title: Disable Apple Intelligence Summarize Messages
-discussion: Apple Intelligence features such as Apple Messages Summary that use off device AI _MUST_ be disabled. Apple will not give a guarentee that the Apple Intelligence feature will stay on device, so it _MUST_ be disabled.
+discussion: Apple Intelligence features such as Apple Messages Summary that use off device AI _MUST_ be disabled. Apple will not give a guarantee that the Apple Intelligence feature will stay on device, so it _MUST_ be disabled.
 references:
   nist:
     cce:
