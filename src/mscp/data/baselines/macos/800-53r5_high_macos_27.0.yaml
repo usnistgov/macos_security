@@ -22,6 +22,10 @@ profile:
       - audit_acls_folders_configure
       - audit_auditd_enabled
       - audit_configure_capacity_notify
+      - audit_control_acls_configure
+      - audit_control_group_configure
+      - audit_control_mode_configure
+      - audit_control_owner_configure
       - audit_failure_halt
       - audit_files_group_configure
       - audit_files_mode_configure
@@ -99,7 +103,9 @@ profile:
       - os_loginwindow_adminhostinfo_disabled
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
+      - os_mcx_disable_disable
       - os_mdm_require
+      - os_messages_summary_disable
       - os_natural_language_editing_disable
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
@@ -126,6 +132,7 @@ profile:
       - os_skip_apple_intelligence_enable
       - os_skip_unlock_with_watch_enable
       - os_ssh_fips_compliant
+      - os_ssh_pqc_configure
       - os_ssh_server_alive_count_max_configure
       - os_ssh_server_alive_interval_configure
       - os_sshd_channel_timeout_configure
@@ -134,6 +141,7 @@ profile:
       - os_sshd_fips_compliant
       - os_sshd_per_source_penalties_configure
       - os_sshd_permit_root_login_configure
+      - os_sshd_pqc_configure
       - os_sshd_unused_connection_timeout_configure
       - os_sudo_log_enforce
       - os_sudo_timeout_configure
@@ -162,6 +170,7 @@ profile:
       - pwpolicy_temporary_or_emergency_accounts_disable
   - section: System Settings
     rules:
+      - system_settings_admin_group_membership_defined
       - system_settings_airplay_receiver_disable
       - system_settings_apple_watch_unlock_disable
       - system_settings_automatic_login_disable

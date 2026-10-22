@@ -62,6 +62,7 @@ profile:
       - os_safari_password_autofill_disable
       - os_safari_reader_summary_disable
       - os_screenshots_disable
+      - os_show_notification_center_lock_screen_disable
       - os_writing_tools_disable
   - section: Password Policy
     rules:

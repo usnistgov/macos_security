@@ -42,6 +42,7 @@ profile:
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
       - os_allow_enterprise_trust_disabled
+      - os_allow_prerelease_disable
       - os_apple_watch_pairing_disable
       - os_apple_watch_wrist_detection_enable
       - os_application_allow_list

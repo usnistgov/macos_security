@@ -88,6 +88,7 @@ profile:
       - os_mail_summary_disable
       - os_mdm_require
       - os_messages_app_disable
+      - os_messages_summary_disable
       - os_nfsd_disable
       - os_notes_transcription_disable
       - os_notes_transcription_summary_disable

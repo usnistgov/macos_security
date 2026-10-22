@@ -48,7 +48,6 @@ profile:
       - os_image_wand_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
-      - os_lock_screen_notification_disable
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
       - os_mail_smart_reply_disable
@@ -60,6 +59,7 @@ profile:
       - os_safari_password_autofill_disable
       - os_safari_reader_summary_disable
       - os_screenshots_disable
+      - os_show_notification_center_lock_screen_disable
       - os_writing_tools_disable
   - section: Password Policy
     rules:

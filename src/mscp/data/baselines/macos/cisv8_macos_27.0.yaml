@@ -91,6 +91,7 @@ profile:
       - os_iphone_mirroring_disable
       - os_library_validation_enabled
       - os_mail_summary_disable
+      - os_mcx_disable_disable
       - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable

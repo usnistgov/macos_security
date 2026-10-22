@@ -89,3 +89,6 @@ profile:
   - section: Permanent
     rules:
       - os_secure_name_resolution
+  - section: Supplemental
+    rules:
+      - supplemental_cis_ios_manual_27
