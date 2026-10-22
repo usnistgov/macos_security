@@ -58,7 +58,7 @@ platforms:
         shell: |-
           apple_intelligence_servers=("127.0.0.1 apple-relay.cloudflare.com" "127.0.0.1 apple-relay.fastly-edge.com" "127.0.0.1 cp4.cloudflare.com" "127.0.0.1 apple-relay.apple.com")
           total=0
-          for config in $apple_intelligence_servers; do
+          for config in "${apple_intelligence_servers[@]}"; do
             total=$(expr $(/usr/bin/grep -i -c "^$config" /etc/hosts) + $total)
           done
           echo $total
@@ -69,13 +69,13 @@ platforms:
           note="### Apple Intelligence Private Cloud Compute is disabled by the organization (apple-relay, cp4.cloudflare.com, etc). Added by the mSCP ###"
           apple_intelligence_servers=("127.0.0.1 apple-relay.cloudflare.com" "127.0.0.1 apple-relay.fastly-edge.com" "127.0.0.1 cp4.cloudflare.com" "127.0.0.1 apple-relay.apple.com")
 
-          host_file=$(/bin/cat /etc/hosts)
+          host_file="/etc/hosts"
 
           if ! /usr/bin/grep -qxF "$note" "$host_file" 2>/dev/null; then
             echo "$note" >> "$host_file"
           fi
-          for config in $apple_intelligence_servers; do
-            if ! echo $host_file | /usr/bin/grep -q -i "^$config" 2>/dev/null; then
+          for config in "${apple_intelligence_servers[@]}"; do
+            if ! /usr/bin/grep -q -i "^$config" $host_file 2>/dev/null; then
               /usr/bin/grep -qxF "^$config" "/etc/hosts" 2>/dev/null || echo "$config" >> "/etc/hosts"
             fi
           done

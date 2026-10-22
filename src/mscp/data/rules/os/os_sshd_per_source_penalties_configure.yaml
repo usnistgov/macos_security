@@ -29,7 +29,7 @@ platforms:
     '15.0': {}
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/grep -q "persourcepenalties no" && echo "no" || echo "yes"
+        shell: /usr/sbin/sshd -G | /usr/bin/grep -iq "persourcepenalties no" && echo "no" || echo "yes"
         result:
           string: 'yes'
       fix:

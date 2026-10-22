@@ -68,8 +68,7 @@ mobileconfig_info:
   - PayloadType: com.apple.alr
     PayloadContent:
       - DenyList:
-          - SigningID:
-              - com.apple.FaceTime
+          - SigningID: com.apple.FaceTime
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed

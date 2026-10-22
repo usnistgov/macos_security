@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97271-1
     800-53r5:
       - SC-13
       - SC-8
@@ -53,7 +53,7 @@ platforms:
 
           for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
             config=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -Gv . 2>&1)
-            currentkex=$(echo "$config" | /usr/bin/awk '/kexalgorithms/{print $2}')
+            currentkex=$(echo "$config" | /usr/bin/awk 'tolower($0) ~ /kexalgorithms/{print $2}')
             configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
             configarray=( ${(f)configfiles} )
             if ! echo $config | /usr/bin/grep -q -i "mlkem768x25519-sha256" ; then

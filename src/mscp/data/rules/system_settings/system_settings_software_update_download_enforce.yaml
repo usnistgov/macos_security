@@ -88,8 +88,6 @@ platforms:
           integer: 1
       fix:
         additional_info: This is implemented by Declarative Device Management (DDM).
-        result:
-          string: 'true'
     introduced: '10.15'
   iOS:
     '27.0':

@@ -102,7 +102,7 @@ platforms:
               let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
             .objectForKey('allowUSBRestrictedMode'))
               if ( pref1 == false ) {
-                let forced = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support").objectIsForcedForKey("allowUSBRestrictedMode"))
+                let forced = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess").objectIsForcedForKey("allowUSBRestrictedMode"))
                 if ( forced == true ) {
                   return("FAIL")
                 } else {

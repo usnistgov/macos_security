@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97273-7
     800-53r5:
       - SC-13
       - SC-8
@@ -33,7 +33,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/sbin/sshd -G | /usr/bin/awk '/kexalgorithms/{print $2}' | /usr/bin/grep -i -c 'mlkem768x25519-sha256'
+          /usr/sbin/sshd -G | /usr/bin/awk 'tolower($0) ~ /kexalgorithms/{print $2}' | /usr/bin/grep -i -c 'mlkem768x25519-sha256'
         result:
           integer: 1
       fix:
