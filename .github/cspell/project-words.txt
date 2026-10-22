@@ -371,3 +371,6 @@ emph
 dsmemberutil
 jdoe
 asmith
+mlkem
+tolower
+capsys
