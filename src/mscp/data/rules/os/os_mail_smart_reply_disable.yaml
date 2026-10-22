@@ -45,15 +45,35 @@ references:
       - 2.L.A
       - 4.L.A
       - 4.L.B
+  cis:
+    benchmark:
+      macos_27:
+        - 2.5.1.7 (level 1)
+      macos_26:
+        - 2.5.1.7 (level 1)
+      macos_15:
+        - 2.5.1.7 (level 1)
+      ios_27:
+        - 2.9.6 (level 1 - End-User Owned Devices)
+        - 3.10.6 (level 1 - Institutionally-Owned Devices)
   bsi:
     indigo:
       ios_26:
         - ANNEX K
 platforms:
   macOS:
-    '27.0': {}
-    '26.0': {}
-    '15.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-
@@ -64,6 +84,11 @@ platforms:
   iOS:
     '27.0':
       supervised: true
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '26.0':
       supervised: true
       benchmarks:

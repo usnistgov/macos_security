@@ -1,7 +1,7 @@
 id: pwpolicy_minimum_length_enforce
 title: Require a Minimum Password Length of $ODV Characters
 discussion: |
-  The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
+  The operating system _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 
@@ -48,6 +48,8 @@ references:
         - APPL-15-003010
       macos_14:
         - APPL-14-003010
+      ios_27:
+        - AIOS-27-006000
       ios_26:
         - AIOS-26-006500
       ios_18:
@@ -77,6 +79,9 @@ references:
         - 5.2.2 (level 1)
       macos_14:
         - 5.2.2 (level 1)
+      ios_27:
+        - 2.4.3 (level 1 - End-User Owned Devices)
+        - 3.4.3 (level 1 - Institutionally-Owned Devices)
       ios_26:
         - 2.4.3 (level 1 - End-User Owned Devices)
         - 3.4.3 (level 1 - Institutionally-Owned Devices)
@@ -109,6 +114,8 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -134,6 +141,13 @@ platforms:
   iOS:
     '27.0':
       supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:
@@ -196,7 +210,7 @@ odv:
   cis_lvl1: 15
   cis_lvl2: 15
   nlmapgov_base: 15
-  nlmapgov_plus: 6
+  nlmapgov_plus: 15
   cis_lvl1_byod: 6
   cis_lvl2_byod: 6
   cis_lvl1_enterprise: 6

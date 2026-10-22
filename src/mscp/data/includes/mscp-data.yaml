@@ -1,9 +1,9 @@
 ---
 mscp:
-  version: '2.0'
+  version: '2.1'
   build: 49
   build_date: '2026-09-18'
-  release_date: '2026-09-10'
+  release_date: '2026-10-22'
   release: '27.0'
 ddm:
   services:
@@ -63,6 +63,11 @@ authors:
     benchmarks:
       - indigo_base
       - indigo_high
+  - name: Aron van den Herik
+    organization: Root3
+    benchmarks:
+      - nlmapgov_base
+      - nlmapgov_plus
   - name: Jordy Witteman
     organization: Root3
     benchmarks:
@@ -110,8 +115,6 @@ benchmarks:
 pre_release_benchmarks:
   macos:
     27.0:
-      - cis_lvl1
-      - cis_lvl2
       - disa_stig
 versions:
   platforms:

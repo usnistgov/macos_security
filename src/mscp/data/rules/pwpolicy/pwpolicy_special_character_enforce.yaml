@@ -47,32 +47,20 @@ references:
       - 2.L.A
       - 3.L.C
   cis:
-    benchmark:
-      macos_26:
-        - 5.2.5 (level 2)
-      macos_15:
-        - 5.2.5 (level 2)
-      macos_14:
-        - 5.2.5 (level 2)
-      macos_27:
-        - 5.2.5 (level 2)
     controls_v8:
       - 5.2
 platforms:
   macOS:
     '27.0':
       benchmarks:
-        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':
       benchmarks:
-        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '15.0':
       benchmarks:
-        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     enforcement_info:
@@ -88,7 +76,6 @@ odv:
     validation:
       min: 1
   recommended: 1
-  cis_lvl2: 1
   disa_stig: 1
 tags:
   - cisv8

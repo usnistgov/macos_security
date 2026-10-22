@@ -52,6 +52,8 @@ references:
         - APPL-15-005090
       macos_14:
         - APPL-14-005090
+      ios_27:
+        - AIOS-27-011400
       ios_26:
         - AIOS-26-012200
       ios_18:
@@ -68,8 +70,10 @@ references:
       - 8.27
   cis:
     benchmark:
+      ios_27:
+        - 3.2.1.18 (level 1 - Institutionally-Owned Devices)
       ios_26:
-        - 3.2.1.19 (level 1 - Institutionally-Owned Devices)
+        - 3.2.1.18 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.19 (level 1 - Institutionally-Owned Devices)
       ios_17:
@@ -98,7 +102,7 @@ platforms:
               let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
             .objectForKey('allowUSBRestrictedMode'))
               if ( pref1 == false ) {
-                let forced = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support").objectIsForcedForKey("allowUSBRestrictedMode"))
+                let forced = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess").objectIsForcedForKey("allowUSBRestrictedMode"))
                 if ( forced == true ) {
                   return("FAIL")
                 } else {
@@ -115,6 +119,11 @@ platforms:
   iOS:
     '27.0':
       supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: true
       benchmarks:

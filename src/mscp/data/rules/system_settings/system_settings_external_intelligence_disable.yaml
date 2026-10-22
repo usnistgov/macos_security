@@ -39,6 +39,8 @@ references:
     disa_stig:
       macos_27:
         - APPL-27-005190
+      ios_27:
+        - AIOS-27-013800
       ios_26:
         - AIOS-26-015400
       ios_18:
@@ -65,11 +67,17 @@ references:
   cis:
     benchmark:
       macos_26:
-        - 2.5.1.1 (level 1)
+        - 2.5.1.2 (level 1)
       macos_15:
-        - 2.5.1.1 (level 1)
+        - 2.5.1.2 (level 1)
       macos_27:
-        - 2.5.1.1 (level 1)
+        - 2.5.1.2 (level 1)
+      ios_27:
+        - 2.9.1 (level 1 - End-User Owned Devices)
+        - 3.10.1 (level 1 - Institutionally-Owned Devices)
+      ios_26:
+        - 2.9.1 (level 1 - End-User Owned Devices)
+        - 3.10.1 (level 1 - Institutionally-Owned Devices)
     controls_v8:
       - 4.1
       - 4.8
@@ -102,10 +110,22 @@ platforms:
           string: 'PASS'
     introduced: '15.2'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: true
       benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
         - name: ios_stig
           severity: medium
         - name: indigo_base

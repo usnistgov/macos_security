@@ -48,6 +48,8 @@ references:
         - APPL-15-002017
       macos_14:
         - APPL-14-002017
+      ios_27:
+        - AIOS-27-016200
       ios_26:
         - AIOS-26-018100
 platforms:
@@ -72,7 +74,11 @@ platforms:
           string: 'PASS'
     introduced: '10.11'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: true
       benchmarks:

@@ -71,6 +71,8 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -89,7 +91,7 @@ platforms:
         - name: nlmapgov_base
     enforcement_info:
       check:
-        shell: '/bin/ls -dn $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''{print $4}'''
+        shell: '/bin/ls -dn "/var/audit" | /usr/bin/awk ''{print $4}'''
         result:
           integer: 0
       fix:

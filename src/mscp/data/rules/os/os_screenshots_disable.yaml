@@ -27,6 +27,8 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_27:
+        - AIOS-27-016100
       ios_26:
         - AIOS-26-018000
       visionos_26:
@@ -51,8 +53,6 @@ references:
         - ANNEX K
   cis:
     benchmark:
-      ios_26:
-        - 3.2.1.1 (level 2 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.1 (level 2 - Institutionally-Owned Devices)
       ios_17:
@@ -70,11 +70,14 @@ platforms:
           string: 'PASS'
     introduced: '10.14.4'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: low
     '26.0':
       supervised: false
       benchmarks:
-        - name: cis_lvl2_enterprise
         - name: ios_stig
         - name: indigo_base
         - name: indigo_high

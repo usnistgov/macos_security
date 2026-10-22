@@ -69,7 +69,7 @@
             {% set references = references[:-2] + "</reference>" %}
         {% endif %}
         {% if rule.rule_references['disa_stig'] and rule.rule_references['disa_stig'][0] != "N/A" %}
-            {% set references = references + "<reference href=\"https://public.cyber.mil/stigs/downloads/\">DISA STIG(s): " %}
+            {% set references = references + "<reference href=\"https://public.cyber.mil/stigs/downloads/\">DISA STIG: " %}
             {% for disa_stig in rule.rule_references['disa_stig'] %}
                 {% set references = references + disa_stig + ", " %}
             {% endfor %}
@@ -127,7 +127,7 @@
               <reference href="https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final">NIST SP 800-171r3: {{ reference.nist_171 | set_reference }}</reference>
               {% endif %}
               {% if reference.disa_stig and reference.disa_stig not none or "N/A" %}
-              <reference href="https://public.cyber.mil/stigs/downloads/">DISA STIG(s): {{ reference.disa_stig | set_reference }}</reference>
+              <reference href="https://public.cyber.mil/stigs/downloads/">DISA STIG: {{ reference.disa_stig | set_reference }}</reference>
               {% endif %}
               {% if reference.cis and reference.cis not none or "N/A" %}
               {% if reference.cis.benchmark and reference.cis.benchmark not none or "N/A" %}

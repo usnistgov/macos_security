@@ -47,11 +47,11 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+        shell: /usr/bin/awk 'FNR==1{b=(FILENAME=="/etc/asl.conf")?"/var/log/":"/var/log/module/" substr(FILENAME,10) "/"} $1==">"{print (($2 ~ /^\//)?$2:b $2)}' /etc/asl.conf /etc/asl/* 2>/dev/null | /usr/bin/sort -u | while IFS= read -r p; do [ -f "$p" ] && [ ! -L "$p" ] && /usr/bin/find "$p" ! -perm 640 -print; done | /usr/bin/wc -l | /usr/bin/tr -d ' '
         result:
           integer: 0
       fix:
-        shell: /bin/chmod 640 $(/usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk -F":" '!/640/{print $2}')
+        shell: /usr/bin/awk 'FNR==1{b=(FILENAME=="/etc/asl.conf")?"/var/log/":"/var/log/module/" substr(FILENAME,10) "/"} $1==">"{print (($2 ~ /^\//)?$2:b $2)}' /etc/asl.conf /etc/asl/* 2>/dev/null | /usr/bin/sort -u | while IFS= read -r p; do [ -f "$p" ] && [ ! -L "$p" ] && /bin/chmod 640 "$p"; done
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

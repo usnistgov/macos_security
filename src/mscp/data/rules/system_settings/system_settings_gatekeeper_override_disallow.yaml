@@ -29,7 +29,10 @@ references:
       - 8.19.01
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
@@ -41,7 +44,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.systempolicy.managed"); (ObjC.unwrap(s.objectForKey("DisableOverride")) == false && s.objectIsForcedForKey("DisableOverride")) ? "PASS" : "FAIL"'
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.systempolicy.managed"); (ObjC.unwrap(s.objectForKey("DisableOverride")) == true && s.objectIsForcedForKey("DisableOverride")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '10.8'

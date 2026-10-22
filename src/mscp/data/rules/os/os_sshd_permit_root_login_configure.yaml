@@ -52,7 +52,7 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
+        shell: /usr/sbin/sshd -G | /usr/bin/awk 'tolower($0) ~ /permitrootlogin/{print $2}'
         result:
           string: 'no'
       fix:

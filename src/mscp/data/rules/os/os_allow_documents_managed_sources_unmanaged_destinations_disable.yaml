@@ -27,6 +27,8 @@ references:
       - CCI-002233
       - CCI-002530
     disa_stig:
+      ios_27:
+        - AIOS-27-008800
       ios_26:
         - AIOS-26-009700
       ios_18:
@@ -62,9 +64,12 @@ references:
       - 8.12
   cis:
     benchmark:
+      ios_27:
+        - 2.2.1.7 (level 1 - End-User Owned Devices)
+        - 3.2.1.20 (level 1 - Institutionally-Owned Devices)
       ios_26:
-        - 2.2.1.8 (level 1 - End-User Owned Devices)
-        - 3.2.1.21 (level 1 - Institutionally-Owned Devices)
+        - 2.2.1.7 (level 1 - End-User Owned Devices)
+        - 3.2.1.20 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.8 (level 1 - End-User Owned Devices)
         - 3.2.1.21 (level 1 - Institutionally-Owned Devices)
@@ -75,7 +80,15 @@ references:
       - 3.3
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:

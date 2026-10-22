@@ -50,6 +50,9 @@ references:
         - ANNEX K
   cis:
     benchmark:
+      ios_27:
+        - 2.4.4 (level 1 - End-User Owned Devices)
+        - 3.4.4 (level 1 - Institutionally-Owned Devices)
       ios_26:
         - 2.4.4 (level 1 - End-User Owned Devices)
         - 3.4.4 (level 1 - Institutionally-Owned Devices)
@@ -65,6 +68,11 @@ platforms:
   iOS:
     '27.0':
       supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '26.0':
       supervised: false
       benchmarks:

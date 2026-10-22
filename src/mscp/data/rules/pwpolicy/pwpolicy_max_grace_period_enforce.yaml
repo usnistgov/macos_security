@@ -22,6 +22,8 @@ references:
     cci:
       - CCI-000057
     disa_stig:
+      ios_27:
+        - AIOS-27-006300
       ios_26:
         - AIOS-26-006800
       ios_18:
@@ -43,6 +45,9 @@ references:
         - ANNEX D (Section 5.9.1 - Device-Code)
   cis:
     benchmark:
+      ios_27:
+        - 2.4.5 (level 1 - End-User Owned Devices)
+        - 3.4.5 (level 1 - Institutionally-Owned Devices)
       ios_26:
         - 2.4.5 (level 1 - End-User Owned Devices)
         - 3.4.5 (level 1 - Institutionally-Owned Devices)
@@ -58,6 +63,13 @@ platforms:
   iOS:
     '27.0':
       supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:
@@ -109,7 +121,7 @@ odv:
     datatype: number
     description: Maximum grace period in minutes, e.g. 5
     validation:
-      min: 1
+      min: 0
   recommended: 0
   cis_lvl1_byod: 0
   cis_lvl2_byod: 0
@@ -133,3 +145,7 @@ mobileconfig_info:
   - PayloadType: com.apple.mobiledevice.passwordpolicy
     PayloadContent:
       - maxGracePeriod: $ODV
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: MaximumGracePeriodInMinutes
+  ddm_value: $ODV

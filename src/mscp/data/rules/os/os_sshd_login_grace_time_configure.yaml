@@ -51,7 +51,7 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/awk '/logingracetime/{print $2}'
+        shell: /usr/sbin/sshd -G | /usr/bin/awk 'tolower($0) ~ /logingracetime/{print $2}'
         result:
           integer: $ODV
       fix:

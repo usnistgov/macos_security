@@ -29,6 +29,8 @@ references:
       - CCI-000370
       - CCI-002314
     disa_stig:
+      ios_27:
+        - AIOS-27-010300
       ios_26:
         - AIOS-26-011000
       ios_18:
@@ -59,6 +61,9 @@ references:
       - 8.12
   cis:
     benchmark:
+      ios_27:
+        - 2.7.2 (level 2 - End-User Owned Devices)
+        - 3.7.2 (level 2 - Institutionally-Owned Devices)
       ios_26:
         - 2.7.2 (level 2 - End-User Owned Devices)
         - 3.7.2 (level 2 - Institutionally-Owned Devices)
@@ -74,6 +79,11 @@ platforms:
   iOS:
     '27.0':
       supervised: false
+      benchmarks:
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:

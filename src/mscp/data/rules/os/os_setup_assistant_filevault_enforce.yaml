@@ -38,7 +38,9 @@ references:
       - 3.11
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: nlmapgov_plus
     '26.0':
       benchmarks:
         - name: nlmapgov_plus

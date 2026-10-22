@@ -49,11 +49,11 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+        shell: /usr/bin/awk 'FNR==1{b=(FILENAME=="/etc/asl.conf")?"/var/log/":"/var/log/module/" substr(FILENAME,10) "/"} $1==">"{print (($2 ~ /^\//)?$2:b $2)}' /etc/asl.conf /etc/asl/* 2>/dev/null | /usr/bin/sort -u | while IFS= read -r p; do [ -f "$p" ] && [ ! -L "$p" ] && /usr/bin/find "$p" \( ! -user root -o ! -group wheel \) -print; done | /usr/bin/wc -l | /usr/bin/tr -d ' '
         result:
           integer: 0
       fix:
-        shell: /usr/sbin/chown root:wheel $(/usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/awk -F":" '!/^root:wheel:/{print $3}')
+        shell: /usr/bin/awk 'FNR==1{b=(FILENAME=="/etc/asl.conf")?"/var/log/":"/var/log/module/" substr(FILENAME,10) "/"} $1==">"{print (($2 ~ /^\//)?$2:b $2)}' /etc/asl.conf /etc/asl/* 2>/dev/null | /usr/bin/sort -u | while IFS= read -r p; do [ -f "$p" ] && [ ! -L "$p" ] && /usr/sbin/chown root:wheel "$p"; done
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

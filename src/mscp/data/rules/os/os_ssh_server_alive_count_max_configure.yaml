@@ -116,7 +116,7 @@ platforms:
         shell: |-
           ret="pass"
           for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-            sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
+            sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -G . | /usr/bin/grep -ic "^serveralivecountmax $ODV")
             if [[ "$sshCheck" == "0" ]]; then
               ret="fail"
               break

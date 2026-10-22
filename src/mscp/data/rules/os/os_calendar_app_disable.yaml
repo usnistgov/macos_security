@@ -63,8 +63,7 @@ mobileconfig_info:
   - PayloadType: com.apple.alr
     PayloadContent:
       - DenyList:
-          - SigningID:
-              - com.apple.iCal
+          - SigningID: com.apple.iCal
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed

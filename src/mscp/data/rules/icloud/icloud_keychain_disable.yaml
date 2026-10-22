@@ -53,6 +53,8 @@ references:
         - APPL-15-002040
       macos_14:
         - APPL-14-002040
+      ios_27:
+        - AIOS-27-002900
       ios_26:
         - AIOS-26-003300
       ios_18:
@@ -77,8 +79,10 @@ references:
       - 4.L.B
   cis:
     benchmark:
+      ios_27:
+        - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
       ios_26:
-        - 3.2.1.6 (level 1 - Institutionally-Owned Devices)
+        - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.6 (level 1 - Institutionally-Owned Devices)
       ios_17:
@@ -104,6 +108,7 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
+        - name: nlmapgov_plus
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -122,7 +127,13 @@ platforms:
           string: 'PASS'
     introduced: '10.12'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
     '26.0':
       supervised: false
       benchmarks:
