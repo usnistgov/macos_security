@@ -42,9 +42,12 @@ references:
       - 8.12
   cis:
     benchmark:
+      ios_27:
+        - 2.2.1.12 (level 1 - End-User Owned Devices)
+        - 3.2.1.26 (level 1 - Institutionally-Owned Devices)
       ios_26:
-        - 2.2.1.13 (level 1 - End-User Owned Devices)
-        - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
+        - 2.2.1.12 (level 1 - End-User Owned Devices)
+        - 3.2.1.26 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.13 (level 1 - End-User Owned Devices)
         - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
@@ -58,6 +61,10 @@ platforms:
     '27.0':
       supervised: false
       benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
         - name: ios_stig
           severity: low
     '26.0':

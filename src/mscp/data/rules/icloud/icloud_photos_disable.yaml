@@ -73,9 +73,6 @@ references:
       - 4.L.A
       - 4.L.B
   cis:
-    benchmark:
-      ios_18:
-        - AIOS-18-003450
     controls_v8:
       - 4.1
       - 4.8
