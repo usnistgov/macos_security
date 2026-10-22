@@ -21,9 +21,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ARG BUILD_SHA=unknown
 ARG IMAGE_REPO=unknown
 ARG IMAGE_TAG=latest
+ARG BUILD_DATE=unknown
 ENV MSCP_BUILD_SHA=${BUILD_SHA} \
     MSCP_IMAGE_REPO=${IMAGE_REPO} \
-    MSCP_IMAGE_TAG=${IMAGE_TAG}
+    MSCP_IMAGE_TAG=${IMAGE_TAG} \
+    MSCP_BUILD_DATE=${BUILD_DATE}
 
 WORKDIR /mscp
 
@@ -43,7 +45,8 @@ RUN useradd -m -u 1001 -s /bin/bash mscp && \
       "PS1='mscp \\\$ '" \
       > /home/mscp/.bashrc && \
     chown -R mscp:mscp /mscp /home/mscp && \
-    chmod +x /mscp/.github/container/entrypoint.sh
+    chmod +x /mscp/.github/container/entrypoint.sh /mscp/.github/container/mscp_check && \
+    ln -s /mscp/.github/container/mscp_check /usr/local/bin/mscp_check
 USER mscp
 
 ENTRYPOINT ["/mscp/.github/container/entrypoint.sh"]
