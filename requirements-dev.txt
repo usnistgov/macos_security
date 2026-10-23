@@ -46,7 +46,7 @@ pandas==2.3.3
     # via mscp (pyproject.toml)
 pathspec==1.1.1
     # via mypy
-pillow==12.3.0
+pillow==13.0.0
     # via mscp (pyproject.toml)
 pluggy==1.6.0
     # via
