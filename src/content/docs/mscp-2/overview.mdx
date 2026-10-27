@@ -157,6 +157,8 @@ The easiest way to get started — no local dependencies required.
    mkdir -p ~/Desktop/mscp/custom
    ```
 
+   Anything placed in this `custom` folder overrides the project's rules and is included in everything you generate. If you are reusing an existing folder, make sure its contents are customizations you intentionally added.
+
 2. ### Run the Container
 
    **Using Apple Container:**
@@ -237,6 +239,22 @@ dependency, so there is nothing extra to set up.
    git clone https://github.com/usnistgov/macos_security.git
    cd macos_security
    ```
+
+   **Verify your clone**
+
+   Confirm that what you have locally matches what the project is serving. The two hashes should be identical:
+   ```bash
+   # Your local commit
+   git rev-parse HEAD
+
+   # Current commit on the official repository
+   git ls-remote https://github.com/usnistgov/macos_security refs/heads/main
+   ```
+   If they differ, your copy may be out of date or may have come from a fork or mirror. Run `git pull`, or re-clone from the URL above.
+
+   **Check your `custom/` folder**
+
+   Anything in `custom/` overrides the project's rules and is included in everything you generate. A fresh clone contains no customizations, so if files are present, make sure they are ones you intentionally added.
 
 2. ### Python Setup
 
