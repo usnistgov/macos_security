@@ -14,6 +14,8 @@ import pytest
 from mscp.classes import Baseline
 from mscp.generate.guidance_support import generate_script
 
+pytestmark = pytest.mark.macos
+
 RULE_ID = "os_external_apfs_hfs_volumes_encrypted"
 REPOSITORY_ROOT = Path(__file__).parents[1]
 BASELINE_PATH = (
