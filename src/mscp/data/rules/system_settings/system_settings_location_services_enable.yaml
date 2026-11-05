@@ -47,8 +47,8 @@ platforms:
       check:
         shell: |-
           /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
-          .objectForKey('LocationServicesEnabled').js
+          ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
+          .objectForKey('LocationServicesEnabled')) == true ? "true" : "false"
           EOS
         result:
           string: 'true'
