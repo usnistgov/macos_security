@@ -133,6 +133,9 @@ Loginwindow
 loginwindowtext
 lpadmin
 lpstat
+LVFUUID
+LVGUUID
+LVUUID
 macsec
 mcxloginscripts
 mcxrefresh
@@ -263,6 +266,7 @@ toclevels
 touchid
 touristd
 tvremote
+TVOS
 UAMDM
 uiagent
 ulify
@@ -284,6 +288,7 @@ XCCDF
 xlwt
 xprotect
 Xprotect
+XROS
 xrefstyle
 xsan
 YARA

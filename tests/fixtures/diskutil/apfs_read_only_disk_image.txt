@@ -1,0 +1,6 @@
+   Volume Name:               AppleTVOS 26.1 Simulator
+   Protocol:                  Disk Image
+   Media Read-Only:           Yes
+   Volume Read-Only:          Yes (read-only mount flag set)
+   Encrypted:                 No
+   FileVault:                 No
