@@ -16,6 +16,7 @@ jobs:
     name: pythonlint
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pull-requests: read
     steps:
       - name: Checkout
@@ -34,7 +35,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.12.1'
+          python-version: '3.12'
 
       - name: Install dependencies
         if: steps.changed-files.outputs.any_changed == 'true'
@@ -49,6 +50,7 @@ jobs:
     name: yamllint
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pull-requests: read
     steps:
       - name: Checkout
