@@ -410,21 +410,17 @@ class Macsecurityrule(BaseModelWithAccessors):
                     if "severity" in benchmark and name == parent_values:
                         severity = benchmark.get("severity", "")
 
-            match tags:
-                case "inherent":
-                    mechanism = "Inherent"
-                    fix_value = "The control cannot be configured out of compliance."
-                    section = Sectionmap.INHERENT
-                case "permanent":
-                    mechanism = "Permanent"
-                    fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
-                    section = Sectionmap.PERMANENT
-                case "not_applicable" | "n_a":
-                    mechanism = "N/A"
-                    fix_value = (
-                        "The control is not applicable when configuring a macOS system."
-                    )
-                    section = Sectionmap.NOT_APPLICABLE
+            if "inherent" in tags:
+                mechanism = "Inherent"
+                fix_value = "The control cannot be configured out of compliance."
+            elif "permanent" in tags:
+                mechanism = "Permanent"
+                fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
+            elif "not_applicable" in tags or "n_a" in tags:
+                mechanism = "N/A"
+                fix_value = (
+                    "The control is not applicable when configuring a macOS system."
+                )
 
             reference_keys = rule_yaml["references"].keys()
             nist: dict[str, Any] = {}

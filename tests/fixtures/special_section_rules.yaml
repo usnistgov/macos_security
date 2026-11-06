@@ -1,0 +1,18 @@
+---
+authors: []
+title: Special section tag fixture
+description: One inherent, one permanent and one not applicable rule.
+platform:
+  os: macOS
+  version: 26.0
+parent_values: recommended
+profile:
+  - section: Inherent
+    rules:
+      - os_application_sandboxing
+  - section: Permanent
+    rules:
+      - audit_off_load_records
+  - section: Not Applicable
+    rules:
+      - os_information_validation
