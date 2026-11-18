@@ -85,9 +85,71 @@ platforms:
         - name: nlmapgov_plus
     enforcement_info:
       check:
-        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => disabled'
+        shell: |-
+          result="FAIL"
+          service_label="com.apple.smbd"
+          disabled_output=$(/bin/launchctl print-disabled system 2>&1)
+          disabled_status=$?
+
+          if [[ "$disabled_status" -eq 0 ]]; then
+            disabled_state=$(/usr/bin/printf '%s\n' "$disabled_output" | /usr/bin/awk -v label="\"$service_label\"" '
+              $1 == "disabled" && $2 == "services" && $3 == "=" && $4 == "{" && NF == 4 { headers++ }
+              $1 == "}" && NF == 1 { footers++ }
+              $1 == label {
+                matches++
+                state = $3
+                if ($2 != "=>" || NF != 3 || ($3 != "enabled" && $3 != "disabled")) invalid = 1
+              }
+              END {
+                if (headers != 1 || footers != 1 || invalid || matches > 1) print "invalid"
+                else if (matches == 1) print state
+                else print "none"
+              }
+            ')
+          else
+            disabled_state="invalid"
+          fi
+
+          service_output=$(/bin/launchctl print "system/$service_label" 2>&1)
+          service_status=$?
+
+          if [[ "$service_status" -eq 0 ]]; then
+            service_state=$(/usr/bin/printf '%s\n' "$service_output" | /usr/bin/awk -v header="system/$service_label = {" '
+              $0 == header { headers++ }
+              $0 ~ /^[[:space:]]state = running$/ { running++ }
+              $0 ~ /^[[:space:]]state = not running$/ { inactive++ }
+              $0 ~ /^[[:space:]]pid = [0-9]+$/ { pids++ }
+              END {
+                if (headers == 1 && running == 1 && inactive == 0 && pids <= 1) print "running"
+                else if (headers == 1 && running == 0 && inactive == 1 && pids == 0) print "inactive"
+                else print "invalid"
+              }
+            ')
+          else
+            service_state=$(/usr/bin/printf '%s\n' "$service_output" | /usr/bin/awk -v missing="Could not find service \"$service_label\" in domain for system" '
+              NF > 0 { nonempty++ }
+              $0 == "Bad request." { bad_request++ }
+              $0 == missing { missing_service++ }
+              END {
+                if (missing_service == 1 && bad_request <= 1 && nonempty == missing_service + bad_request) print "inactive"
+                else print "invalid"
+              }
+            ')
+          fi
+
+          if [[ "$disabled_state" == "invalid" ]] || [[ "$service_state" == "invalid" ]]; then
+            result="${result}  ERROR"
+          elif [[ "$service_state" == "running" ]]; then
+            result="${result}  RUNNING"
+          elif [[ "$disabled_state" == "enabled" ]]; then
+            result="${result}  ENABLED"
+          else
+            result="PASS"
+          fi
+
+          echo "$result"
         result:
-          integer: 1
+          string: PASS
       fix:
         shell: /bin/launchctl disable system/com.apple.smbd
         additional_info: The system may need to be restarted for the update to take effect.
