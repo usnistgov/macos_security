@@ -112,7 +112,9 @@ logmessage(){
   if [[ ! $quiet ]]; then
     echo "$log_entry"
   elif [[ ${quiet[2][2]} == 1 ]]; then
-    if [[ "$message" == *"failed"* ]] || [[ "$message" == *"exemption"* ]]; then
+    # Match the result text, not the bare word: rule IDs such as
+    # audit_flags_fm_failed_configure contain "failed" even when they pass.
+    if [[ "$message" == *" failed (Result: "* ]] || [[ "$message" == *"exemption"* ]]; then
       echo "$log_entry"
     fi
   fi
