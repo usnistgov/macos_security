@@ -42,8 +42,32 @@ jobs:
         run: >
           python -m pytest
           -v
-          -m "not integration"
+          -m "not integration and not macos"
           --cov
 
       - name: Run integration tests
         run: python -m pytest -v -m integration
+
+  pytest-macos:
+    name: pytest (macOS generated Zsh)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+          cache: 'pip'
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade -r requirements-dev.txt
+
+      - name: Run generated Zsh compliance tests
+        run: >
+          python -m pytest
+          -v
+          -m macos
+          tests/test_external_volume_encryption.py

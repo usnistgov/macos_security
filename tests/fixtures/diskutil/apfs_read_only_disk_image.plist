@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BusProtocol</key>
+	<string>Disk Image</string>
+	<key>Content</key>
+	<string>41504653-0000-11AA-AA11-00306543ECAC</string>
+	<key>DeviceIdentifier</key>
+	<string>disk5s1</string>
+	<key>Encryption</key>
+	<false/>
+	<key>FilesystemName</key>
+	<string>APFS</string>
+	<key>FilesystemType</key>
+	<string>apfs</string>
+	<key>FileVault</key>
+	<false/>
+	<key>VolumeName</key>
+	<string>AppleTVOS 26.1 Simulator</string>
+	<key>Writable</key>
+	<false/>
+	<key>WritableMedia</key>
+	<false/>
+	<key>WritableVolume</key>
+	<false/>
+</dict>
+</plist>

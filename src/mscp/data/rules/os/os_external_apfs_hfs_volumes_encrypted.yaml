@@ -40,7 +40,117 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/sbin/diskutil list external | /usr/bin/grep -E "APFS Volume|Apple_HFS|Logical Volume" | /usr/bin/awk '{print $NF}' | /usr/bin/xargs -n1 /usr/sbin/diskutil info 2>/dev/null | /usr/bin/awk '/Volume Name:/{ volume_name=$0; sub(/^[ \t]*Volume Name:[ \t]*/,"",volume_name); is_disk_image=""; is_vol_readonly=0; is_media_readonly=0 } /Protocol:/{ is_disk_image=($0 ~ /Disk Image/) } /Volume Read-Only:/{ is_vol_readonly=($0 ~ /Yes/) } /Media Read-Only:/{ is_media_readonly=($0 ~ /Yes/) } /FileVault:/{ if(is_disk_image && is_vol_readonly && is_media_readonly) next; encryption_status=($2=="Yes") ? "Encrypted" : "NOT ENCRYPTED"; printf "%-40s %s\n", volume_name, encryption_status }'
+          plist_value() {
+            /usr/bin/plutil -extract "$2" raw -o - - <<< "$1" 2>/dev/null
+          }
+
+          disk_list=$(/usr/sbin/diskutil list -plist external 2>/dev/null)
+          if (( $? != 0 )); then
+            /bin/echo "ERROR: Unable to list external volumes"
+          else
+            unencrypted_volumes=()
+            uncheckable_volumes=()
+            disk_count=$(plist_value "$disk_list" "AllDisks")
+
+            if (( $? != 0 )) || [[ ! "$disk_count" =~ ^[0-9]+$ ]]; then
+              uncheckable_volumes+=("disk list")
+              disk_count=0
+            fi
+
+            for (( disk_index=0; disk_index<disk_count; disk_index++ )); do
+              volume_id=$(plist_value "$disk_list" "AllDisks.$disk_index")
+              if (( $? != 0 )) || [[ ! "$volume_id" =~ ^disk[0-9]+(s[0-9]+)*$ ]]; then
+                uncheckable_volumes+=("disk list entry")
+                continue
+              fi
+
+              volume_info=$(/usr/sbin/diskutil info -plist "$volume_id" 2>/dev/null)
+              if (( $? != 0 )); then
+                uncheckable_volumes+=("$volume_id")
+                continue
+              fi
+              if [[ -z "$volume_info" ]] || ! /usr/bin/plutil -lint - <<< "$volume_info" >/dev/null 2>&1; then
+                uncheckable_volumes+=("$volume_id")
+                continue
+              fi
+
+              filesystem_type=$(plist_value "$volume_info" "FilesystemType")
+              if (( $? != 0 )); then
+                candidate_name=$(plist_value "$volume_info" "VolumeName")
+                if (( $? == 0 )) && [[ -n "$candidate_name" ]]; then
+                  uncheckable_volumes+=("$volume_id")
+                fi
+                continue
+              fi
+              if [[ "$filesystem_type" != "apfs" && "$filesystem_type" != "hfs" ]]; then
+                continue
+              fi
+
+              reported_volume_id=$(plist_value "$volume_info" "DeviceIdentifier")
+              identifier_status=$?
+              volume_name=$(plist_value "$volume_info" "VolumeName")
+              name_status=$?
+              protocol=$(plist_value "$volume_info" "BusProtocol")
+              protocol_status=$?
+              writable_media=$(plist_value "$volume_info" "WritableMedia")
+              writable_media_status=$?
+              writable_volume=$(plist_value "$volume_info" "WritableVolume")
+              writable_volume_status=$?
+
+              if (( identifier_status != 0 || name_status != 0 || protocol_status != 0 || writable_media_status != 0 || writable_volume_status != 0 )) ||
+                 [[ "$reported_volume_id" != "$volume_id" || -z "$volume_name" || -z "$protocol" ]] ||
+                 [[ "$writable_media" != "true" && "$writable_media" != "false" ]] ||
+                 [[ "$writable_volume" != "true" && "$writable_volume" != "false" ]]; then
+                uncheckable_volumes+=("$volume_id")
+                continue
+              fi
+
+              if [[ "$protocol" == "Disk Image" && "$writable_media" == "false" && "$writable_volume" == "false" ]]; then
+                continue
+              fi
+
+              if [[ "$filesystem_type" == "apfs" ]]; then
+                encrypted=$(plist_value "$volume_info" "FileVault")
+                encryption_status=$?
+              else
+                corestorage_uuid=$(plist_value "$volume_info" "CoreStorageLVUUID")
+                if (( $? == 0 )); then
+                  if [[ -z "$corestorage_uuid" ]]; then
+                    uncheckable_volumes+=("$volume_id")
+                    continue
+                  fi
+                  encrypted=$(plist_value "$volume_info" "CoreStorageEncrypted")
+                  encryption_status=$?
+                else
+                  plist_value "$volume_info" "CoreStorageEncrypted" >/dev/null
+                  if (( $? == 0 )); then
+                    uncheckable_volumes+=("$volume_id")
+                    continue
+                  fi
+                  encrypted="false"
+                  encryption_status=0
+                fi
+              fi
+
+              if (( encryption_status != 0 )) || [[ "$encrypted" != "true" && "$encrypted" != "false" ]]; then
+                uncheckable_volumes+=("$volume_id")
+              elif [[ "$encrypted" == "false" ]]; then
+                unencrypted_volumes+=("$volume_name")
+              fi
+            done
+
+            if (( ${#uncheckable_volumes[@]} > 0 )); then
+              result="ERROR: Unable to determine encryption status for external volumes: ${(j:, :)uncheckable_volumes}"
+              if (( ${#unencrypted_volumes[@]} > 0 )); then
+                result+="; Unencrypted external volumes: ${(j:, :)unencrypted_volumes}"
+              fi
+              /bin/echo "$result"
+            elif (( ${#unencrypted_volumes[@]} > 0 )); then
+              /bin/echo "Unencrypted external volumes: ${(j:, :)unencrypted_volumes}"
+            else
+              /bin/echo "Yes"
+            fi
+          fi
         result:
           string: 'Yes'
       fix:

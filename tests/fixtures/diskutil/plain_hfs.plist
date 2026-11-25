@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BusProtocol</key>
+	<string>USB</string>
+	<key>Content</key>
+	<string>Apple_HFS</string>
+	<key>DeviceIdentifier</key>
+	<string>disk5s1</string>
+	<key>FilesystemName</key>
+	<string>Journaled HFS+</string>
+	<key>FilesystemType</key>
+	<string>hfs</string>
+	<key>VolumeName</key>
+	<string>Plain HFS Backup</string>
+	<key>Writable</key>
+	<true/>
+	<key>WritableMedia</key>
+	<true/>
+	<key>WritableVolume</key>
+	<true/>
+</dict>
+</plist>
